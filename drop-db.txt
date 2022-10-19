@@ -1,0 +1,13 @@
+USE tempdb;
+GO
+DECLARE @SQL nvarchar(1000);
+IF EXISTS (SELECT 1 FROM sys.databases WHERE [name] = N'TodoApp')
+BEGIN
+    SET @SQL = N'USE [TodoApp];
+
+                 ALTER DATABASE TodoApp SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                 USE [tempdb];
+
+                 DROP DATABASE TodoApp;';
+    EXEC (@SQL);
+END;

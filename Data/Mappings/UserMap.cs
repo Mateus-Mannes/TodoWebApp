@@ -15,16 +15,18 @@ namespace TodoApp.Data.Mappings
                 .UseIdentityColumn();
 
             builder.Property(x => x.Name)
-                .HasMaxLength(100)
-                .HasColumnType("NVARCHAR");
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(100);
 
             builder.Property(x => x.Slug)
                .HasMaxLength(100)
                .HasColumnType("VARCHAR");
 
+            builder.HasIndex(x => x.Slug).IsUnique();
+
             builder.Property(x => x.PasswordHash)
-                .HasMaxLength(300)
-                .HasColumnType("NVARCHAR");
+                .HasColumnType("NVARCHAR")
+                .HasMaxLength(300);
         }
     }
 }

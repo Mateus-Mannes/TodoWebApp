@@ -22,6 +22,8 @@ namespace TodoApp.Data.Mappings
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR");
 
+            builder.HasIndex(x => x.Slug).IsUnique();
+
         }
     }
 }

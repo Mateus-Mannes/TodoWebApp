@@ -15,7 +15,7 @@ namespace TodoApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "NVARCHAR", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
                     Slug = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -29,9 +29,9 @@ namespace TodoApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "NVARCHAR", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
                     Slug = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false),
-                    PasswordHash = table.Column<string>(type: "NVARCHAR", maxLength: 300, nullable: false)
+                    PasswordHash = table.Column<string>(type: "NVARCHAR(300)", maxLength: 300, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,6 +71,18 @@ namespace TodoApp.Migrations
                 name: "IX_Todo_UserId",
                 table: "Todo",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TodoGroup_Slug",
+                table: "TodoGroup",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Slug",
+                table: "User",
+                column: "Slug",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

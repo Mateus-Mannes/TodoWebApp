@@ -12,7 +12,7 @@ using TodoApp.Data;
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(TodoAppDbContext))]
-    [Migration("20221019001654_InitialMigration")]
+    [Migration("20221019111935_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,7 +69,7 @@ namespace TodoApp.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR");
+                        .HasColumnType("NVARCHAR(100)");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -77,6 +77,9 @@ namespace TodoApp.Migrations
                         .HasColumnType("VARCHAR(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("TodoGroup", (string)null);
                 });
@@ -92,12 +95,12 @@ namespace TodoApp.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR");
+                        .HasColumnType("NVARCHAR(100)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("NVARCHAR");
+                        .HasColumnType("NVARCHAR(300)");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -105,6 +108,9 @@ namespace TodoApp.Migrations
                         .HasColumnType("VARCHAR(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("User", (string)null);
                 });
