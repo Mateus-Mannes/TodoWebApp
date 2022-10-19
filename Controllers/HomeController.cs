@@ -9,6 +9,6 @@ public class HomeController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok("Api funcionando");
+        return Ok("TodoApp Api");
     }
 }
