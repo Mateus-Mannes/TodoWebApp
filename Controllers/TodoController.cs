@@ -26,7 +26,7 @@ namespace TodoApp.Controllers
         public async Task<IActionResult> GetListAsync()
         {
             var todos = await _context.Todos.AsNoTracking().ToListAsync();
-            return Ok(new ResultViewModel<List<Todo>>(todos));
+            return Ok(todos);
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@ namespace TodoApp.Controllers
             todo.UserId = 1;
             var created = await _context.Todos.AddAsync(todo);
             await _context.SaveChangesAsync();
-            return Ok(new ResultViewModel<Todo>(created.Entity));
+            return Ok(created.Entity);
         }
 
         [HttpPut]
@@ -47,7 +47,7 @@ namespace TodoApp.Controllers
             todo.DeadLine = input.DeadLine;
             _context.Todos.Update(todo);
             await _context.SaveChangesAsync();
-            return Ok(new ResultViewModel<Todo>(todo));
+            return Ok(todo);
         }
 
         [HttpDelete]
@@ -57,7 +57,7 @@ namespace TodoApp.Controllers
             var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);
             _context.Todos.Remove(todo);
             await _context.SaveChangesAsync();
-            return Ok(new ResultViewModel<Todo>(todo));
+            return Ok(todo);
         }
     }
 }
