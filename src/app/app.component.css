@@ -39,3 +39,16 @@ p {margin: 0;}
     align-items: center;
     padding-right: 1rem;
 }
+
+.spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+}
+
+.alert {
+    margin: auto;
+    margin-top: 1rem;
+    max-width: 80%;
+}

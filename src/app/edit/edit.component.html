@@ -14,7 +14,10 @@
         </mat-form-field>
         <div align="end">
             <button type="button" (click)="close()" style="margin-right: 1rem;" mat-button class="btn btn-light" >Cancel</button>
-            <button mat-button class="btn btn-light" type="submit" cdkFocusInitial>Save</button>
+            <button [disabled]="form.invalid" mat-button class="btn btn-light" type="submit" cdkFocusInitial>
+                Save
+                <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+            </button>
         </div>
     </form>
 </mat-dialog-content>

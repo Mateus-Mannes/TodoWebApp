@@ -5,3 +5,8 @@
 table {
     width: 100%;
   }
+  
+.todo-actions {
+  display: flex;
+  justify-content: center;
+}
