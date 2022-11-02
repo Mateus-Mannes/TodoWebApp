@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TodoApp.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApp.Controllers
 {
     [ApiController]
     [Route("todo")]
+    [Authorize(Roles = "user")]
     public class TodoController : ControllerBase
     {
         private readonly TodoAppDbContext _context;
@@ -37,7 +39,7 @@ namespace TodoApp.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] TodoCreateViewModel input)
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
-
+           
             try
             {
                 var todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
