@@ -1,8 +1,25 @@
-<table mat-table [dataSource]="todos">
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let todo"> {{todo.description}} </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-</table>
+<div class="app">
+    <app-grid #grid class="app__grid"></app-grid>
+    <form (ngSubmit)="addTodo()">
+        <div class="app__todo-input input-group mb-3">
+            <button type="submit" class="input-group-text">+</button>
+            <input #input type="text" class="form-control" placeholder="New Todo ..." aria-label="Todo" >
+            
+            <mat-form-field class="app__todo-input__date-picker" style="width: 0%;">
+                <input matInput [matDatepicker]="datepicker">
+                <mat-datepicker #datepicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" (click)="pickDate()" matDatepickerApply>Apply</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+            <div class="app__todo-input__date">
+              <p>{{ pickedDate | date:'shortDate' }}</p>
+              <mat-icon *ngIf="pickedDate" (click)="pickedDate = null" aria-hidden="false">highlight_off</mat-icon>
+            </div>
+            <button type="button" class="input-group-text" (click)="datepicker.open()"><mat-icon>alarm</mat-icon></button>
+        </div>
+    </form>
+    
+</div>
