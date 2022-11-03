@@ -1,0 +1,21 @@
+<div *ngIf="loginError" class="alert alert-danger" role="alert">
+    Login Failed
+</div>
+
+<form>
+    <mat-form-field appearance="fill">
+      <mat-label>User Name</mat-label>
+      <input type="text" matInput [formControl]="nameControl" >
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="text" matInput [formControl]="passwordControl" >
+        <mat-error *ngIf="passwordControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <button (click)="login()" [disabled]="form.invalid" mat-raised-button color="primary">Login</button>
+  </form>

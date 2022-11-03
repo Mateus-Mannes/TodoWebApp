@@ -1,0 +1,36 @@
+<div class="app">
+    <app-grid (onError)="alertError($event)" #grid class="app__grid"></app-grid>
+    <form (ngSubmit)="addTodo()">
+        <div class="app__todo-input input-group mb-3">
+            <button [disabled]="addingTodo" #submit type="submit" class="input-group-text">
+              <span *ngIf="!addingTodo">+</span>
+              <div *ngIf="addingTodo" class="spinner-border spinner-border-sm" role="status"></div>
+            </button>
+            <input [disabled]="addingTodo" #input type="text" class="form-control" placeholder="New Todo ..." aria-label="Todo" >
+            
+            <mat-form-field class="app__todo-input__date-picker" style="width: 0%;">
+                <input matInput [matDatepicker]="datepicker">
+                <mat-datepicker #datepicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" (click)="pickDate()" matDatepickerApply>Apply</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+            <div *ngIf="pickedDate" class="app__todo-input__date">
+              <p>{{ pickedDate | date:'shortDate' }}</p>
+              <mat-icon *ngIf="pickedDate" (click)="pickedDate = null" aria-hidden="false">highlight_off</mat-icon>
+            </div>
+            <button [disabled]="addingTodo" type="button" class="input-group-text" (click)="datepicker.open()"><mat-icon>alarm</mat-icon></button>
+        </div>
+    </form>
+    
+</div>
+<div *ngIf="gridLoading" class="spinner text-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<div *ngIf="error" class="alert alert-danger" role="alert">
+  Server Error: {{ errorMsg }}
+</div>
