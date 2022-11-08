@@ -3,13 +3,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TodoApp.Domain;
-
+using TodoApp.ViewModels;
 
 namespace TodoApp.Services
 {
     public class TokenService
     {
-        public string GenerateToken(User user)
+        public TokenViewModel GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
@@ -26,7 +26,7 @@ namespace TodoApp.Services
 
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return new TokenViewModel() { Token = tokenHandler.WriteToken(token), ExpiresAt = tokenDescriptor.Expires };
         }
     }
 }
