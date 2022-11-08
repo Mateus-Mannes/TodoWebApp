@@ -41,6 +41,7 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     this.http.post<Todo>('todo', newTodo).subscribe({
       next: res => {this.grid.load([res]);
       this.input.nativeElement.value = '';
+      this.pickedDate = null;
       this.addingTodo = false;}, 
       error: value => {this.alertError(value.message);this.addingTodo = false;}
     });

@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { AuthService } from './auth-service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     provide: HTTP_INTERCEPTORS,
     useClass: APIInterceptor,
     multi: true,
-  }],
+  }, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

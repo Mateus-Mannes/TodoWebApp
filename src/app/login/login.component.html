@@ -12,10 +12,13 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input type="text" matInput [formControl]="passwordControl" >
+        <input type="password" matInput [formControl]="passwordControl" >
         <mat-error *ngIf="passwordControl.hasError('required')">
           Password is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <button (click)="login()" [disabled]="form.invalid" mat-raised-button color="primary">Login</button>
+      <button (click)="login()" [disabled]="form.invalid || loading" mat-raised-button color="primary">
+        Login
+        <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+      </button>
   </form>
