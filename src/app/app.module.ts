@@ -22,6 +22,8 @@ import { LoginComponent } from './login/login.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { AuthService } from './auth-service';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { GroupsComponent } from './groups/groups.component';
+import { ApplicationComponent } from './application/application.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { CreateUserComponent } from './create-user/create-user.component';
     EditComponent,
     LoginComponent,
     TodoListComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    GroupsComponent,
+    ApplicationComponent
   ],
   imports: [
     BrowserModule,

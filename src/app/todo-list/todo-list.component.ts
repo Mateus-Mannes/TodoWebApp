@@ -69,9 +69,4 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   } 
-
-  logout(){
-    this.authService.logout();
-    this.router.navigateByUrl('/login');
-  }
 }
