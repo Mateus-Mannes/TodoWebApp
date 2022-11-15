@@ -1,3 +1,4 @@
+<button type="button" class="btn btn-dark" (click)="logout()">Logout</button>
 <div class="app">
     <app-grid (onError)="alertError($event)" #grid class="app__grid"></app-grid>
     <form (ngSubmit)="addTodo()">

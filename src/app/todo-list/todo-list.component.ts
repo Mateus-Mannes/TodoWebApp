@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth-service';
 import { Todo } from '../entities/todo';
 import { GridComponent } from '../grid/grid.component';
 
@@ -20,7 +22,8 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   error = false;
   errorMsg = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private readonly authService: AuthService,
+    private readonly router: Router) {}
 
   ngOnInit() {
     
@@ -61,4 +64,8 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     return new Promise( resolve => setTimeout(resolve, ms) );
   } 
 
+  logout(){
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
+  }
 }

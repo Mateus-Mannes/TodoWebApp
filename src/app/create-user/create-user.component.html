@@ -1,9 +1,5 @@
 <div *ngIf="loginError" class="alert alert-danger" role="alert">
-    Login Failed
-</div>
-
-<div *ngIf="created" class="alert alert-success" role="alert">
-  Account created
+    {{ errorMsg }}
 </div>
 
 <form>
@@ -20,12 +16,13 @@
         <mat-error *ngIf="passwordControl.hasError('required')">
           Password is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="passwordControl.invalid && !passwordControl.hasError('required')">
+          Password needs to have at least 10 characters
+        </mat-error>
       </mat-form-field>
-      <button (click)="login()" [disabled]="form.invalid || loading" mat-raised-button color="primary">
-        Login
+      <button (click)="create()" [disabled]="form.invalid || loading" mat-raised-button color="primary">
+        Create Account
         <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
       </button>
-      <a href="/user">Create Account</a>
+      <a href="/login">Back to Login</a>
   </form>
-
-  

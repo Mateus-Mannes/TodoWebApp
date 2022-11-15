@@ -5,39 +5,37 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth-service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-create-user',
+  templateUrl: './create-user.component.html',
+  styleUrls: ['../login/login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class CreateUserComponent implements OnInit {
 
   nameControl = new FormControl('', [Validators.required]);
-  passwordControl = new FormControl('', [Validators.required]);
+  passwordControl = new FormControl('', [Validators.required, Validators.minLength(10)]);
   form: FormGroup;
   loginError = false;
   loading = false;
-  created = false;
+  errorMsg = '';
 
   constructor(private readonly http: HttpClient,
-    private readonly router: Router,
-    private readonly authService: AuthService) {
+    private readonly router: Router) {
     this.form = new FormGroup([this.nameControl, this.passwordControl]);
    }
 
   ngOnInit(): void {
-    if(this.router.url.endsWith('created')) this.created = true;
   }
 
-  login() {
+  create() {
     this.loading = true;
-    this.authService.login(this.nameControl.value ?? '',this.passwordControl.value ?? '')
+    this.http.post('account', {name: this.nameControl.value, password: this.passwordControl.value})
     .subscribe({
       next: value => {
-        this.authService.setSession(value);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/login#created');
       }, error: err => {
         this.loading = false;
         this.loginError = true;
+        this.errorMsg = err.error;
       }
     })
   }

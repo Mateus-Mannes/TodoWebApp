@@ -13,9 +13,14 @@ export class APIInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiReq = req.clone({ url: `https://localhost:7259/${req.url}` });
     const token = localStorage.getItem("id_token");
-    if (req.url != 'account/login' && (!token || !this.authService.isLoggedIn())) {
+
+    if(req.url.startsWith('account') && this.authService.isLoggedIn())
+      this.router.navigateByUrl('/todo');
+
+    if (!req.url.startsWith('account') && (!token || !this.authService.isLoggedIn())) {
       this.router.navigateByUrl('/login');
     }
+
     apiReq = apiReq.clone({
       headers: req.headers.set("Authorization",
           "Bearer " + token)

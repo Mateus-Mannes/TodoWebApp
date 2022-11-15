@@ -21,6 +21,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { AuthService } from './auth-service';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AuthService } from './auth-service';
     GridComponent,
     EditComponent,
     LoginComponent,
-    TodoListComponent
+    TodoListComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
