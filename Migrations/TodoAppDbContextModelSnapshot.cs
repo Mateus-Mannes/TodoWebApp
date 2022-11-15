@@ -51,6 +51,8 @@ namespace TodoApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TodoGroupId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Todo", (string)null);
@@ -117,7 +119,7 @@ namespace TodoApp.Migrations
                 {
                     b.HasOne("TodoApp.Domain.TodoGroup", "TodoGroup")
                         .WithMany("Todos")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("TodoGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

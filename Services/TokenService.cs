@@ -16,7 +16,7 @@ namespace TodoApp.Services
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new List<Claim>() { 
-                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Name, user.Slug),
                     new Claim(ClaimTypes.Role, "user")
                 }),
                 SigningCredentials = new SigningCredentials(

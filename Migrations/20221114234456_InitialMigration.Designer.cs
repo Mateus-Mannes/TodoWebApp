@@ -12,7 +12,7 @@ using TodoApp.Data;
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(TodoAppDbContext))]
-    [Migration("20221019111935_InitialMigration")]
+    [Migration("20221114234456_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,8 @@ namespace TodoApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TodoGroupId");
 
                     b.HasIndex("UserId");
 
@@ -119,7 +121,7 @@ namespace TodoApp.Migrations
                 {
                     b.HasOne("TodoApp.Domain.TodoGroup", "TodoGroup")
                         .WithMany("Todos")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("TodoGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

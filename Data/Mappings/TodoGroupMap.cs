@@ -23,7 +23,6 @@ namespace TodoApp.Data.Mappings
                 .HasColumnType("VARCHAR");
 
             builder.HasIndex(x => x.Slug).IsUnique();
-
         }
     }
 }

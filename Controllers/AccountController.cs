@@ -27,6 +27,9 @@ namespace TodoApp.Controllers
         public async Task<IActionResult> CreateAsync(UserCreateViewModel input)
         {
             if(!ModelState.IsValid) return BadRequest(ModelState.GetErrors());
+        
+            if ((await _context.Users.AsNoTracking().CountAsync()) >= 100)
+                return BadRequest("The limit of users from the application was reached.");
 
             var slug = input.Name.Replace(' ', '\0').ToLower();
 
@@ -52,8 +55,7 @@ namespace TodoApp.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.GetErrors());
 
-            var slug = input.Name.Replace(' ', '\0').ToLower();
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Slug == slug);
+            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Name == input.Name);
 
             if (user == null)
             {

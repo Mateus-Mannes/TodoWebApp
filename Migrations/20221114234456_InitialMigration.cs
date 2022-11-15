@@ -54,8 +54,8 @@ namespace TodoApp.Migrations
                 {
                     table.PrimaryKey("PK_Todo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Todo_TodoGroup_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Todo_TodoGroup_TodoGroupId",
+                        column: x => x.TodoGroupId,
                         principalTable: "TodoGroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -66,6 +66,11 @@ namespace TodoApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Todo_TodoGroupId",
+                table: "Todo",
+                column: "TodoGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Todo_UserId",
