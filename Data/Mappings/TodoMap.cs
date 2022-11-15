@@ -29,7 +29,6 @@ namespace TodoApp.Data.Mappings
                 .HasDefaultValueSql("getdate()");
 
             builder.HasOne(x => x.TodoGroup).WithMany(x => x.Todos).HasForeignKey(x => x.TodoGroupId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.User).WithMany(x => x.Todos).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

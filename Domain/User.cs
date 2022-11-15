@@ -7,6 +7,6 @@
         public string Slug { get; set; }
         public string PasswordHash { get; set; }
 
-        public List<Todo> Todos { get; set; }
+        public List<TodoGroup> TodoGroups { get; set; } = new List<TodoGroup>();
     }
 }

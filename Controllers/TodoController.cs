@@ -25,34 +25,18 @@ namespace TodoApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetListAsync()
-        {
-            try
-            {
-                var todos = await _context.Todos.AsNoTracking()
-                    .Include(x => x.User)
-                    .Where(x => x.User.Slug == User.Identity.Name)
-                    .ToListAsync();
-                return Ok(todos);
-            } catch { return StatusCode(500, "Internal server error"); }
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] TodoCreateViewModel input)
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 
-            var count = await _context.Todos.AsNoTracking().Include(x => x.User)
-                .Where(x => x.User.Slug == User.Identity.Name).CountAsync();
+            var count = await _context.Todos.AsNoTracking()
+                .Where(x => x.TodoGroupId == input.TodoGroupId).CountAsync();
             if (count >= 20) return BadRequest("Todos limit reached");
-
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Slug == User.Identity.Name);
 
             try
             {
                 var todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
-                todo.UserId = user.Id;
                 var created = await _context.Todos.AddAsync(todo);
                 await _context.SaveChangesAsync();
                 return Ok(created.Entity);

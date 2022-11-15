@@ -40,6 +40,7 @@ namespace TodoApp.Controllers
 
             var user = new User() { Name = input.Name, Slug = slug };
             user.PasswordHash = PasswordHasher.Hash(input.Password);
+            user.TodoGroups.Add(new TodoGroup() { Name = "Todos", Slug = "todos" });
 
             try
             {
