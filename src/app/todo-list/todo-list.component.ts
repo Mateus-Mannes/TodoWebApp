@@ -4,6 +4,7 @@ import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker'
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service';
 import { Todo } from '../entities/todo';
+import { TodoGroup } from '../entities/todo-group';
 import { GridComponent } from '../grid/grid.component';
 
 @Component({
@@ -21,6 +22,7 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   addingTodo = false;
   error = false;
   errorMsg = '';
+  groupId: number;
 
   constructor(private http: HttpClient, private readonly authService: AuthService,
     private readonly router: Router) {}
@@ -30,8 +32,12 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.http.get<Todo[]>('todo').subscribe({
-      next: res => {this.grid.load(res); this.gridLoading = false;},
+    this.http.get<TodoGroup[]>('todo-group').subscribe({
+      next: res => {
+        this.grid.load(res[0].todos); 
+        this.gridLoading = false;
+        this.groupId = res[0].id;
+      },
       error: value => {this.alertError(value.message); this.gridLoading = false;}
     });
   }
@@ -40,7 +46,7 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     if(this.input.nativeElement.value == '') return;
     this.addingTodo = true;
     let newTodo = {description: this.input.nativeElement.value,
-                  deadLine: this.pickedDate, todoGroupId: 1, id: 0, userId: 1, createdAt: new Date()}
+                  deadLine: this.pickedDate, todoGroupId: this.groupId, id: 0, userId: 1, createdAt: new Date()}
     this.http.post<Todo>('todo', newTodo).subscribe({
       next: res => {this.grid.load([res]);
       this.input.nativeElement.value = '';
