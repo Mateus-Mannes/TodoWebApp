@@ -22,8 +22,6 @@ namespace TodoApp.Data.Mappings
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR");
 
-            builder.HasIndex(x => x.Slug).IsUnique();
-
             builder.HasOne(x => x.User).WithMany(x => x.TodoGroups).OnDelete(DeleteBehavior.Cascade);
         }
     }
