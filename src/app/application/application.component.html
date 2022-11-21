@@ -1,5 +1,5 @@
 
 <div class="app">
-    <app-groups class="app__groups"></app-groups>
-    <app-todo-list class="app__todos"></app-todo-list>
+    <app-groups (error)="error($event)" #groups *ngIf="todos" class="app__groups"></app-groups>
+    <app-todo-list #todos class="app__todos"></app-todo-list>
 </div>

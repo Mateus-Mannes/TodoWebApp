@@ -6,8 +6,7 @@
               <span *ngIf="!addingTodo">+</span>
               <div *ngIf="addingTodo" class="spinner-border spinner-border-sm" role="status"></div>
             </button>
-            <input [disabled]="addingTodo" #input type="text" class="form-control" placeholder="New Todo ..." aria-label="Todo" >
-            
+            <input autofocus [disabled]="addingTodo" #input type="text" class="form-control" placeholder="New Todo ..." aria-label="Todo">
             <mat-form-field class="app__todo-input__date-picker" style="width: 0%;">
                 <input matInput [matDatepicker]="datepicker">
                 <mat-datepicker #datepicker>

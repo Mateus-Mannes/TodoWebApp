@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Injectable, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker, MatDatepickerInput } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service';
@@ -12,7 +12,7 @@ import { GridComponent } from '../grid/grid.component';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css']
 })
-export class TodoListComponent implements OnInit, AfterViewInit {
+export class TodoListComponent implements OnInit {
   title = 'todo-app';
   @ViewChild('grid') grid: GridComponent;
   @ViewChild('input') input: ElementRef;
@@ -31,17 +31,6 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     
   }
 
-  ngAfterViewInit(): void {
-    this.http.get<TodoGroup[]>('todo-group').subscribe({
-      next: res => {
-        this.grid.load(res[0].todos); 
-        this.gridLoading = false;
-        this.groupId = res[0].id;
-      },
-      error: value => {this.alertError(value.message); this.gridLoading = false;}
-    });
-  }
-
   addTodo() {
     if(this.input.nativeElement.value == '') return;
     this.addingTodo = true;
@@ -51,7 +40,11 @@ export class TodoListComponent implements OnInit, AfterViewInit {
       next: res => {this.grid.load([res]);
       this.input.nativeElement.value = '';
       this.pickedDate = null;
-      this.addingTodo = false;}, 
+      this.addingTodo = false;
+      setTimeout(()=>{ // this will make the execution after the above boolean has changed
+        this.input.nativeElement.focus();
+      },0);
+    }, 
       error: value => {this.alertError(value.message);this.addingTodo = false;}
     });
   }

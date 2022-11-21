@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-service';
+import { TodoGroup } from '../entities/todo-group';
 
 @Component({
   selector: 'app-groups',
@@ -8,11 +10,15 @@ import { AuthService } from '../auth-service';
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
+  groups: TodoGroup[];
+  @Output() error: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private readonly authService: AuthService,
-    private readonly router: Router) { }
+    private readonly router: Router,
+    private readonly http: HttpClient) { }
 
   ngOnInit(): void {
+    
   }
 
   logout(){
