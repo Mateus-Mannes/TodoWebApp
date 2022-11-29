@@ -40,7 +40,7 @@ namespace TodoApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(string name)
         {
-            if(await (_context.TodoGroups.AsNoTracking().Include(x => x.User)
+            if (await (_context.TodoGroups.AsNoTracking().Include(x => x.User)
                 .AnyAsync(x => x.Name == name && x.User.Slug == User.Identity.Name)))
             {
                 return BadRequest("A list with this name already exists, try another one");
@@ -63,6 +63,22 @@ namespace TodoApp.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            try
+            {
+                var list = await _context.TodoGroups.FirstOrDefaultAsync(x => x.Id == id);
+                if (list == null) return NotFound("List not found");
+
+                _context.TodoGroups.Remove(list);
+                await _context.SaveChangesAsync();
+                return Ok(list);
+            }
+            catch { return StatusCode(500, "Internal server error"); }
         }
     }
 }
