@@ -12,6 +12,7 @@ import { TodoListComponent } from '../todo-list/todo-list.component';
 export class ApplicationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('todos') todosList: TodoListComponent;
+  @ViewChild('groups') groups: GroupsComponent;
 
   constructor(private readonly http: HttpClient) { }
 
@@ -21,10 +22,12 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.http.get<TodoGroup[]>('todo-group').subscribe({
       next: res => {
-        this.todosList.grid.load(res[0].todos); 
+        this.todosList.grid.load(res[0].todos);
         this.todosList.gridLoading = false;
         this.todosList.groupId = res[0].id;
-      },
+        this.groups.default = res[0];
+        this.groups.groups = res.filter(x => x.slug != 'todos')
+      },  
       error: value => {this.error(value.message); this.todosList.gridLoading = false;}
     });
   }

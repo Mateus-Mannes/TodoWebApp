@@ -28,11 +28,15 @@ export class TodoListComponent implements OnInit {
     private readonly router: Router) {}
 
   ngOnInit() {
-    
+
   }
 
   addTodo() {
     if(this.input.nativeElement.value == '') return;
+    if(this.grid.todos.length >= 10){
+      this.alertError('10 tasks limit reached');
+      return;
+    }
     this.addingTodo = true;
     let newTodo = {description: this.input.nativeElement.value,
                   deadLine: this.pickedDate, todoGroupId: this.groupId, id: 0, userId: 1, createdAt: new Date()}
@@ -44,7 +48,7 @@ export class TodoListComponent implements OnInit {
       setTimeout(()=>{ // this will make the execution after the above boolean has changed
         this.input.nativeElement.focus();
       },0);
-    }, 
+    },
       error: value => {this.alertError(value.message);this.addingTodo = false;}
     });
   }
@@ -61,5 +65,5 @@ export class TodoListComponent implements OnInit {
 
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
-  } 
+  }
 }

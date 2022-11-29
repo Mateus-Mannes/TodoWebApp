@@ -24,6 +24,7 @@ import { AuthService } from './auth-service';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ApplicationComponent } from './application/application.component';
+import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ApplicationComponent } from './application/application.component';
     TodoListComponent,
     CreateUserComponent,
     GroupsComponent,
-    ApplicationComponent
+    ApplicationComponent,
+    GroupDialogComponent
   ],
   imports: [
     BrowserModule,

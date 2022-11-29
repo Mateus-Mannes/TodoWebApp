@@ -23,13 +23,13 @@
             <button [disabled]="addingTodo" type="button" class="input-group-text" (click)="datepicker.open()"><mat-icon>alarm</mat-icon></button>
         </div>
     </form>
-    
+
 </div>
 <div *ngIf="gridLoading" class="spinner text-center">
   <div class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<div *ngIf="error" class="alert alert-danger" role="alert">
-  Server Error: {{ errorMsg }}
+<div *ngIf="error" class="alert alert-danger text-center" role="alert">
+  {{ errorMsg }}
 </div>
