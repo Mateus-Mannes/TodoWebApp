@@ -9,5 +9,14 @@
 
         public List<Todo> Todos { get; set; } 
         public User User { get; set; }
+
+        public TodoGroup(string name, int userId)
+        {
+            Name = name;
+            UserId = userId;
+            Slug = name.ToLower().Replace(' ', '\0').ToLower();
+        }
+
+        public TodoGroup() { }
     }
 }

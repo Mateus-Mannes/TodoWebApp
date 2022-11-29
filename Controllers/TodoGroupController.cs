@@ -36,5 +36,33 @@ namespace TodoApp.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(string name)
+        {
+            if(await (_context.TodoGroups.AsNoTracking().Include(x => x.User)
+                .AnyAsync(x => x.Name == name && x.User.Slug == User.Identity.Name)))
+            {
+                return BadRequest("A list with this name already exists, try another one");
+            }
+
+            if (await (_context.TodoGroups.AsNoTracking().Include(x => x.User).CountAsync()) >= 10)
+            {
+                return BadRequest("Todo Lists limit reached");
+            }
+
+            var user = await _context.Users.Where(x => x.Slug == User.Identity.Name).FirstOrDefaultAsync();
+
+            try
+            {
+                var created = await _context.TodoGroups.AddAsync(new TodoGroup(name, user.Id));
+                await _context.SaveChangesAsync();
+                return Ok(created.Entity);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
