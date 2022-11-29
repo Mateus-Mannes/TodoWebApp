@@ -40,7 +40,8 @@ export class GridComponent implements OnInit {
     actions.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>'
     this.http.delete(`todo/${todo.id}`).subscribe({
       next: () => {
-        this.todos = this.todos.filter(x => x.id != todo.id);
+        let index = this.todos.indexOf(todo);
+        this.todos.splice(index, 1);
         this.table.renderRows();
       }, error: value => {
         actions.innerHTML = defaultActionsHtml;

@@ -26,7 +26,8 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         this.todosList.gridLoading = false;
         this.todosList.groupId = res[0].id;
         this.groups.default = res[0];
-        this.groups.groups = res.filter(x => x.slug != 'todos')
+        this.groups.selected = res[0].id;
+        this.groups.groups = res.filter(x => x.slug != 'todos');
       },  
       error: value => {this.error(value.message); this.todosList.gridLoading = false;}
     });
@@ -34,6 +35,15 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
 
   error(msg: string) {
     this.todosList.alertError(msg);
+  }
+
+  selectList(id: number) {
+    this.todosList.gridLoading = true;
+    let list = this.groups.groups.find(x => x.id == id);
+    this.todosList.grid.todos = list?.todos ?? this.groups.default.todos;
+    this.todosList.grid.table.renderRows();
+    this.todosList.groupId = id;
+    this.todosList.gridLoading = false;
   }
 
 }
