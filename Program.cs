@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TodoApp.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureAuthentication(builder);
@@ -23,6 +24,7 @@ LoadConfiguration(app);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseResponseCompression();
 app.MapControllers();
 app.UseCors(x => x
     .AllowAnyOrigin()
@@ -59,6 +61,15 @@ void ConfigureMvc(WebApplicationBuilder builder)
     builder.Services.AddControllers()
     .AddJsonOptions(x => { x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; })
     .ConfigureApiBehaviorOptions(x => x.SuppressModelStateInvalidFilter = true);
+
+    builder.Services.AddResponseCompression(options =>
+    {
+        options.Providers.Add<GzipCompressionProvider>();
+    });
+    builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+    {
+        options.Level = System.IO.Compression.CompressionLevel.Optimal;
+    });
 }
 
     void LoadConfiguration(WebApplication app)
