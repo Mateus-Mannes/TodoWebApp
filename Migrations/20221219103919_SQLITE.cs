@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TodoApp.Migrations
 {
-    public partial class INITIAL_SQLITE : Migration
+    public partial class SQLITE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,7 @@ namespace TodoApp.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Description = table.Column<string>(type: "NVARCHAR", maxLength: 200, nullable: false),
                     DeadLine = table.Column<DateTime>(type: "DATE", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "DATE", nullable: false, defaultValueSql: "getdate()"),
+                    CreatedAt = table.Column<DateTime>(type: "DATE", nullable: false, defaultValueSql: "DATE('now')"),
                     TodoGroupId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

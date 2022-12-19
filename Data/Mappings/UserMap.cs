@@ -11,8 +11,7 @@ namespace TodoApp.Data.Mappings
             builder.ToTable("User");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
+                .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Name)
                 .HasColumnType("NVARCHAR")

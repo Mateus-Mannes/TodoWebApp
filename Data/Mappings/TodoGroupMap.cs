@@ -11,8 +11,7 @@ namespace TodoApp.Data.Mappings
             builder.ToTable("TodoGroup");
             builder.HasKey(t => t.Id);
             builder.Property(x => x.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
+                .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Name)
                 .HasMaxLength(100)

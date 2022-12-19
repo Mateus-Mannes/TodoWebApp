@@ -12,8 +12,7 @@ namespace TodoApp.Data.Mappings
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
+                .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Description)
                 .IsRequired()
@@ -26,7 +25,7 @@ namespace TodoApp.Data.Mappings
 
             builder.Property(x => x.CreatedAt)
                 .HasColumnType("DATE")
-                .HasDefaultValueSql("getdate()");
+                .HasDefaultValueSql("DATE('now')");
 
             builder.HasOne(x => x.TodoGroup).WithMany(x => x.Todos).HasForeignKey(x => x.TodoGroupId).OnDelete(DeleteBehavior.Cascade);
         }

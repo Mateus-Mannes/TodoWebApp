@@ -20,7 +20,5 @@ namespace TodoApp.Data
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new TodoMap());
         }
-
-
     }
 }
