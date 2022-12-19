@@ -1,6 +1,5 @@
 using TodoApp.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using AutoMapper;
 using TodoApp;
 using System.Text.Json.Serialization;
