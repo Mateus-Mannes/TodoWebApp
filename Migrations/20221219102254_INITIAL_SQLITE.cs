@@ -5,33 +5,19 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TodoApp.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class INITIAL_SQLITE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TodoGroup",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
-                    Slug = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TodoGroup", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "NVARCHAR(100)", maxLength: 100, nullable: false),
-                    Slug = table.Column<string>(type: "VARCHAR(100)", maxLength: 100, nullable: false),
-                    PasswordHash = table.Column<string>(type: "NVARCHAR(300)", maxLength: 300, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "NVARCHAR", maxLength: 100, nullable: false),
+                    Slug = table.Column<string>(type: "VARCHAR", maxLength: 100, nullable: false),
+                    PasswordHash = table.Column<string>(type: "NVARCHAR", maxLength: 300, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,16 +25,36 @@ namespace TodoApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TodoGroup",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "NVARCHAR", maxLength: 100, nullable: false),
+                    Slug = table.Column<string>(type: "VARCHAR", maxLength: 100, nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TodoGroup", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TodoGroup_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Todo",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "NVARCHAR(200)", maxLength: 200, nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Description = table.Column<string>(type: "NVARCHAR", maxLength: 200, nullable: false),
                     DeadLine = table.Column<DateTime>(type: "DATE", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "DATE", nullable: false, defaultValueSql: "getdate()"),
-                    TodoGroupId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    TodoGroupId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,12 +65,6 @@ namespace TodoApp.Migrations
                         principalTable: "TodoGroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Todo_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -73,15 +73,9 @@ namespace TodoApp.Migrations
                 column: "TodoGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Todo_UserId",
-                table: "Todo",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TodoGroup_Slug",
+                name: "IX_TodoGroup_UserId",
                 table: "TodoGroup",
-                column: "Slug",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_Slug",

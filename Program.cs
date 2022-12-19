@@ -71,7 +71,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     var connection = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<TodoAppDbContext>(options =>
     {
-        options.UseSqlServer(connection);
+        options.UseSqlite(connection);
     });
 
     var mapperCfg = new MapperConfiguration(cfg => {cfg.AddProfile<TodoAppAutoMapperProfile>();});

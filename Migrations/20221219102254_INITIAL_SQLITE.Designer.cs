@@ -12,25 +12,22 @@ using TodoApp.Data;
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(TodoAppDbContext))]
-    [Migration("20221114234456_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221219102254_INITIAL_SQLITE")]
+    partial class INITIAL_SQLITE
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
             modelBuilder.Entity("TodoApp.Domain.Todo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -43,19 +40,14 @@ namespace TodoApp.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR(200)");
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<int>("TodoGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TodoGroupId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Todo", (string)null);
                 });
@@ -64,24 +56,27 @@ namespace TodoApp.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR(100)");
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Slug")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("TodoGroup", (string)null);
                 });
@@ -90,24 +85,25 @@ namespace TodoApp.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR(100)");
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("NVARCHAR(300)");
+                        .HasColumnType("NVARCHAR");
 
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Id");
 
@@ -125,13 +121,16 @@ namespace TodoApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("TodoGroup");
+                });
+
+            modelBuilder.Entity("TodoApp.Domain.TodoGroup", b =>
+                {
                     b.HasOne("TodoApp.Domain.User", "User")
-                        .WithMany("Todos")
+                        .WithMany("TodoGroups")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("TodoGroup");
 
                     b.Navigation("User");
                 });
@@ -143,7 +142,7 @@ namespace TodoApp.Migrations
 
             modelBuilder.Entity("TodoApp.Domain.User", b =>
                 {
-                    b.Navigation("Todos");
+                    b.Navigation("TodoGroups");
                 });
 #pragma warning restore 612, 618
         }
