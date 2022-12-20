@@ -11,7 +11,7 @@ export class APIInterceptor implements HttpInterceptor {
     private readonly router: Router){}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let apiReq = req.clone({ url: `https://localhost:7259/${req.url}` });
+    let apiReq = req.clone({ url: `https://todoapp-mateus.azurewebsites.net/${req.url}` });
     const token = localStorage.getItem("id_token");
 
     if(req.url.startsWith('account') && this.authService.isLoggedIn())
