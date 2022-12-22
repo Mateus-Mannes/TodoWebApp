@@ -22,7 +22,7 @@ namespace TodoApp.Services
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature),
-                Expires = DateTime.Now.AddHours(8),
+                Expires = DateTime.Now.AddHours(2),
 
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
