@@ -3,6 +3,7 @@ import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/com
 import { Observable } from 'rxjs';
 import { AuthService } from './auth-service';
 import { Router } from '@angular/router';
+import { environment } from './../environments/environment';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
@@ -11,7 +12,7 @@ export class APIInterceptor implements HttpInterceptor {
     private readonly router: Router){}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let apiReq = req.clone({ url: `https://todoapp-mateus.azurewebsites.net/${req.url}` });
+    let apiReq = req.clone({ url: `${environment.apiUrl}/${req.url}` });
     const token = localStorage.getItem("id_token");
 
     if(req.url.startsWith('account') && this.authService.isLoggedIn())
