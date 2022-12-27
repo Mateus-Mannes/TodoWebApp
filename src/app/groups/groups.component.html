@@ -2,11 +2,11 @@
 <button type="button" class="btn btn-light" (click)="logout()">Logout</button>
 
 <ul class="list-group">
-    <li (click)="selectGroup($event, default.id)" [id]="default?.id" class="list-group-item">
+    <li (click)="selectGroup($event, default.id)" [id]="'gp'+default?.id" class="list-group-item">
       <b *ngIf="selected != undefined && selected == default?.id;">Todos</b>
       <div *ngIf="selected == undefined || selected != default?.id;">Todos</div>
     </li>
-    <li (click)="selectGroup($event, group.id)" [id]="group.id" *ngFor="let group of groups" class="list-group-item">
+    <li (click)="selectGroup($event, group.id)" [id]="'gp'+group.id" *ngFor="let group of groups" class="list-group-item">
       <b *ngIf="selected != undefined && selected == group.id;">{{ group.name }}</b>
       <div *ngIf="selected == undefined || selected != group.id;">{{ group.name }}</div>
       <mat-icon (click)="deleteGroup(group.id)" align="end">delete</mat-icon>

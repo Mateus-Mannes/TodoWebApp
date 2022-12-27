@@ -25,7 +25,7 @@ export class GroupsComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    
+
   }
 
   logout(){
@@ -54,7 +54,7 @@ export class GroupsComponent implements OnInit {
   }
 
   deleteGroup(id: number){
-    let deleteButton = (document.getElementById(id.toString()) as HTMLImageElement);
+    let deleteButton = (document.getElementById('gp'+id.toString()) as HTMLImageElement);
     let deleteButtonHtml = deleteButton.innerHTML;
     deleteButton.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>'
     this.http.delete(`todo-group/${id}`).subscribe({
@@ -70,11 +70,11 @@ export class GroupsComponent implements OnInit {
 
   selectGroup(event: any, id: number){
     if(event.target.className.startsWith('mat-icon')) return;
-    this.selectGroupById(id);    
+    this.selectGroupById(id);
   }
 
   selectGroupById(id: number){
-    let html = (document.getElementById(this.selected.toString()) as HTMLImageElement);
+    let html = (document.getElementById('gp'+this.selected.toString()) as HTMLImageElement);
     html.className = 'list-group-item';
 
     this.selected = id;

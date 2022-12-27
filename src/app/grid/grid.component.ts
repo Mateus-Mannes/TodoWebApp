@@ -26,7 +26,7 @@ export class GridComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    
+
   }
 
   load(todos: Todo[]){
@@ -35,7 +35,7 @@ export class GridComponent implements OnInit {
   }
 
   delete(todo: Todo){
-    let actions = (document.getElementById(todo.id.toString()) as HTMLImageElement);
+    let actions = (document.getElementById('actions'+todo.id.toString()) as HTMLImageElement);
     let defaultActionsHtml = actions.innerHTML;
     actions.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div>'
     this.http.delete(`todo/${todo.id}`).subscribe({
