@@ -1,3 +1,4 @@
+import { AlertService } from './../alert-service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -19,7 +20,8 @@ export class CreateUserComponent implements OnInit {
   errorMsg = '';
 
   constructor(private readonly http: HttpClient,
-    private readonly router: Router) {
+    private readonly router: Router,
+    private readonly alertService: AlertService) {
     this.form = new FormGroup([this.nameControl, this.passwordControl]);
    }
 
@@ -31,7 +33,8 @@ export class CreateUserComponent implements OnInit {
     this.http.post('account', {name: this.nameControl.value, password: this.passwordControl.value})
     .subscribe({
       next: value => {
-        this.router.navigateByUrl('/login#created');
+        this.router.navigateByUrl('/login');
+        this.alertService.alert('account created', 'success')
       }, error: err => {
         this.loading = false;
         this.loginError = true;

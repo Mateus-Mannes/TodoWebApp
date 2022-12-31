@@ -2,27 +2,28 @@
     {{ errorMsg }}
 </div>
 
-<form>
-    <mat-form-field appearance="fill">
-      <mat-label>User Name</mat-label>
-      <input type="text" matInput [formControl]="nameControl" >
-      <mat-error *ngIf="nameControl.hasError('required')">
-        Name is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input type="password" matInput [formControl]="passwordControl" >
-        <mat-error *ngIf="passwordControl.hasError('required')">
-          Password is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="passwordControl.invalid && !passwordControl.hasError('required')">
-          Password needs to have at least 10 characters
+  <form class="full d-flex align-items-center justify-content-center flex-column">
+      <mat-form-field appearance="fill">
+        <mat-label>User Name</mat-label>
+        <input type="text" matInput [formControl]="nameControl" >
+        <mat-error *ngIf="nameControl.hasError('required')">
+          Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <button (click)="create()" [disabled]="form.invalid || loading" mat-raised-button color="primary">
-        Create Account
-        <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
-      </button>
-      <a href="/login">Back to Login</a>
-  </form>
+      <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput [formControl]="passwordControl" >
+          <mat-error *ngIf="passwordControl.hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="passwordControl.invalid && !passwordControl.hasError('required')">
+            Password needs to have at least 10 characters
+          </mat-error>
+        </mat-form-field>
+        <button (click)="create()" [disabled]="form.invalid || loading" mat-raised-button color="primary">
+          Create Account
+          <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+        </button>
+        <a href="/login">Back to Login</a>
+    </form>
+

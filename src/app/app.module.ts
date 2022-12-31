@@ -1,3 +1,4 @@
+import { AlertService } from './alert-service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -59,7 +60,7 @@ import { GroupDialogComponent } from './group-dialog/group-dialog.component';
     provide: HTTP_INTERCEPTORS,
     useClass: APIInterceptor,
     multi: true,
-  }, AuthService],
+  }, AuthService, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

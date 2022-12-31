@@ -1,24 +1,17 @@
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.container {
+  max-width: 550px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 2%;
 }
 
-mat-form-field {
-    max-width: 400px;
-    width: 100%;
+.login {
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
-.alert {
-    position: absolute;
-    right: 25%;
-    margin-top: 3rem;
-    width: 50%;
-    text-align: center;
-}
-
-a {
-    margin-top: 1.5rem;
+button {
+  width: 7rem;
 }
