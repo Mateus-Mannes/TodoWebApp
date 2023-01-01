@@ -1,8 +1,18 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 
 @Injectable()
 export class AlertService  {
+
+  notifyErros(error: HttpErrorResponse){
+    if(Array.isArray(error.error)){
+      error.error.forEach(x => this.alert(x, 'danger'));
+    } else {
+      var msg = String(error.error);
+      this.alert(msg, 'danger');
+    }
+  }
 
   alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 

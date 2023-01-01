@@ -13,11 +13,9 @@ import { AuthService } from '../auth-service';
 export class CreateUserComponent implements OnInit {
 
   nameControl = new FormControl('', [Validators.required]);
-  passwordControl = new FormControl('', [Validators.required, Validators.minLength(10)]);
+  passwordControl = new FormControl('', [Validators.required]);
   form: FormGroup;
-  loginError = false;
   loading = false;
-  errorMsg = '';
 
   constructor(private readonly http: HttpClient,
     private readonly router: Router,
@@ -37,8 +35,7 @@ export class CreateUserComponent implements OnInit {
         this.alertService.alert('account created', 'success')
       }, error: err => {
         this.loading = false;
-        this.loginError = true;
-        this.errorMsg = err.error;
+        this.alertService.notifyErros(err);
       }
     })
   }
