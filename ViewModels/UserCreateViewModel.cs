@@ -6,7 +6,7 @@ namespace TodoApp.ViewModels
     {
         [Required]
         public string Name { get; set; }
-        [Required]
+        [Required, MinLength(10, ErrorMessage = "Password does not have the minimal length (10)")]
         public string Password { get; set; }
     }
 }
