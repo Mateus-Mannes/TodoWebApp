@@ -10,6 +10,7 @@ using TodoApp.Services;
 
 namespace TodoApp.Controllers
 {
+    [ControllerAttribute]
     [ApiController]
     [Route("account")]
     public class AccountController : ControllerBase
@@ -42,13 +43,9 @@ namespace TodoApp.Controllers
             user.PasswordHash = PasswordHasher.Hash(input.Password);
             user.TodoGroups.Add(new TodoGroup() { Name = "Todos", Slug = "todos" });
 
-            try
-            {
-                var created = await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync();
-                return Ok(created.Entity);
-            }
-            catch { return StatusCode(500, "Internal server error"); }
+            var created = await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return Ok(created.Entity);
         }
 
         [HttpPost("login")]
@@ -66,12 +63,8 @@ namespace TodoApp.Controllers
             if (!PasswordHasher.Verify(user.PasswordHash, input.Password))
                 return BadRequest("Invalid user or password.");
 
-            try
-            {
-                var token = _tokenService.GenerateToken(user);
-                return Ok(token);
-            }
-            catch { return StatusCode(500, "Internal server error."); }
+            var token = _tokenService.GenerateToken(user);
+            return Ok(token);
         }
     }
 }

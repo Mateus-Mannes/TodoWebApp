@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApp.Controllers
 {
+    [ControllerAttribute]
     [ApiController]
     [Route("todo")]
     [Authorize(Roles = "user")]
@@ -34,13 +35,10 @@ namespace TodoApp.Controllers
                 .Where(x => x.TodoGroupId == input.TodoGroupId).CountAsync();
             if (count >= 20) return BadRequest("Todos limit reached");
 
-            try
-            {
-                var todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
-                var created = await _context.Todos.AddAsync(todo);
-                await _context.SaveChangesAsync();
-                return Ok(created.Entity);
-            } catch { return StatusCode(500, "Internal server error"); }
+            var todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
+            var created = await _context.Todos.AddAsync(todo);
+            await _context.SaveChangesAsync();
+            return Ok(created.Entity);
         }
 
         [HttpPut]
@@ -48,34 +46,26 @@ namespace TodoApp.Controllers
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 
-            try
-            {
-                var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == input.Id);
-                if (todo == null) return NotFound("Todo not found");
+            var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == input.Id);
+            if (todo == null) return NotFound("Todo not found");
 
-                todo.Description = input.Description;
-                todo.DeadLine = input.DeadLine;
-                _context.Todos.Update(todo);
-                await _context.SaveChangesAsync();
-                return Ok(todo);
-            } catch { return StatusCode(500, "Internal server error"); }
-            
+            todo.Description = input.Description;
+            todo.DeadLine = input.DeadLine;
+            _context.Todos.Update(todo);
+            await _context.SaveChangesAsync();
+            return Ok(todo);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            try
-            {
-                var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);
-                if (todo == null) return NotFound("Todo not found");
+            var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);
+            if (todo == null) return NotFound("Todo not found");
 
-                _context.Todos.Remove(todo);
-                await _context.SaveChangesAsync();
-                return Ok(todo);
-            }
-            catch { return StatusCode(500, "Internal server error"); }
+            _context.Todos.Remove(todo);
+            await _context.SaveChangesAsync();
+            return Ok(todo);
         }
     }
 }

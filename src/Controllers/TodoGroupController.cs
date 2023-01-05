@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApp.Controllers
 {
+    [ControllerAttribute]
     [ApiController]
     [Route("todo-group")]
     [Authorize(Roles = "user")]
@@ -22,19 +23,13 @@ namespace TodoApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetListAsync()
         {
-            try
-            {
-                var lists = await _context.TodoGroups.AsNoTracking()
-                    .Include(x => x.Todos)
-                    .Include(x => x.User)
-                    .Where(x => x.User.Slug == User.Identity.Name)
-                    .ToListAsync();
+            var lists = await _context.TodoGroups.AsNoTracking()
+                .Include(x => x.Todos)
+                .Include(x => x.User)
+                .Where(x => x.User.Slug == User.Identity.Name)
+                .ToListAsync();
 
-                return Ok(lists);
-            } catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(lists);
         }
 
         [HttpPost]
@@ -46,39 +41,28 @@ namespace TodoApp.Controllers
                 return BadRequest("A list with this name already exists, try another one");
             }
 
-            if (await (_context.TodoGroups.AsNoTracking().Include(x => x.User).CountAsync()) >= 10)
+            if (await (_context.TodoGroups.AsNoTracking().Include(x => x.User).Where(x => x.User.Slug == User.Identity.Name).CountAsync()) >= 10)
             {
                 return BadRequest("Todo Lists limit reached");
             }
 
             var user = await _context.Users.Where(x => x.Slug == User.Identity.Name).FirstOrDefaultAsync();
 
-            try
-            {
-                var created = await _context.TodoGroups.AddAsync(new TodoGroup(name, user.Id));
-                await _context.SaveChangesAsync();
-                return Ok(created.Entity);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            var created = await _context.TodoGroups.AddAsync(new TodoGroup(name, user.Id));
+            await _context.SaveChangesAsync();
+            return Ok(created.Entity);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            try
-            {
-                var list = await _context.TodoGroups.FirstOrDefaultAsync(x => x.Id == id);
-                if (list == null) return NotFound("List not found");
+            var list = await _context.TodoGroups.FirstOrDefaultAsync(x => x.Id == id);
+            if (list == null) return NotFound("List not found");
 
-                _context.TodoGroups.Remove(list);
-                await _context.SaveChangesAsync();
-                return Ok(list);
-            }
-            catch { return StatusCode(500, "Internal server error"); }
+            _context.TodoGroups.Remove(list);
+            await _context.SaveChangesAsync();
+            return Ok(list);
         }
     }
 }
