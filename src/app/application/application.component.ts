@@ -28,7 +28,8 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         this.groups.default = res[0];
         this.groups.selected = res[0].id;
         this.groups.groups = res.filter(x => x.slug != 'todos');
-      },  
+        this.todosList.grid.todos = this.groups.default.todos;
+      },
       error: value => {this.error(value.message); this.todosList.gridLoading = false;}
     });
   }

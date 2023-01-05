@@ -11,7 +11,7 @@
         <input type="password" class="form-control" id="password" [formControl]="passwordControl">
       </div>
       <div class="d-flex justify-content-center">
-      <button (click)="create()" [disabled]="form.invalid || loading" type="submit" class="btn btn-primary">Create Account
+      <button style="width: 180px;" (click)="create()" [disabled]="form.invalid || loading" type="submit" class="btn btn-primary">Create Account
         <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
       </button>
       </div>
