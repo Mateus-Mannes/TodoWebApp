@@ -8,6 +8,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TodoApp.Services;
 using Microsoft.AspNetCore.ResponseCompression;
+using TodoApp.Repositories;
+using TodoApp.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureAuthentication(builder);
@@ -71,7 +73,7 @@ void ConfigureMvc(WebApplicationBuilder builder)
     });
 }
 
-    void LoadConfiguration(WebApplication app)
+void LoadConfiguration(WebApplication app)
 {
     Configuration.JwtKey = app.Configuration.GetValue<string>("JwtKey");
 }
@@ -83,9 +85,13 @@ void ConfigureServices(WebApplicationBuilder builder)
     {
         options.UseSqlite(connection);
     });
-
+    
     var mapperCfg = new MapperConfiguration(cfg => {cfg.AddProfile<TodoAppAutoMapperProfile>();});
     var mapper = mapperCfg.CreateMapper();
     builder.Services.AddSingleton<IMapper>(mapper);
     builder.Services.AddTransient<TokenService>();
+
+    builder.Services.AddTransient<IRepository<Todo>, Repository<Todo>>();
+    builder.Services.AddTransient< IRepository<TodoGroup>,Repository <TodoGroup>>();
+    builder.Services.AddTransient<IRepository<User>,Repository <User>>();
 }

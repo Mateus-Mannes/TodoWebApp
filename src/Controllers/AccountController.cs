@@ -7,6 +7,7 @@ using AutoMapper;
 using SecureIdentity.Password;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Services;
+using TodoApp.Repositories;
 
 namespace TodoApp.Controllers
 {
@@ -15,12 +16,12 @@ namespace TodoApp.Controllers
     [Route("account")]
     public class AccountController : ControllerBase
     {
-        private readonly TodoAppDbContext _context;
+        private readonly IRepository<User> _userRepository;
         private readonly TokenService _tokenService;
 
-        public AccountController(TodoAppDbContext context, TokenService tokenService)
+        public AccountController(IRepository<User> userRepository, TokenService tokenService)
         {
-            _context = context;
+            _userRepository = userRepository;
             _tokenService = tokenService;
         }
 
@@ -29,12 +30,12 @@ namespace TodoApp.Controllers
         {
             if(!ModelState.IsValid) return BadRequest(ModelState.GetErrors());
         
-            if ((await _context.Users.AsNoTracking().CountAsync()) >= 100)
+            if ((await _userRepository.GetQueryable().AsNoTracking().CountAsync()) >= 100)
                 return BadRequest("The limit of users from the application was reached.");
 
             var slug = input.Name.Replace(' ', '\0').ToLower();
 
-            if(_context.Users.AsNoTracking().Any(x => x.Slug == slug))
+            if(_userRepository.GetQueryable().AsNoTracking().Any(x => x.Slug == slug))
             {
                 return BadRequest("This name is already taken, choose another.");
             }
@@ -43,9 +44,8 @@ namespace TodoApp.Controllers
             user.PasswordHash = PasswordHasher.Hash(input.Password);
             user.TodoGroups.Add(new TodoGroup() { Name = "Todos", Slug = "todos" });
 
-            var created = await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-            return Ok(created.Entity);
+            var created = await _userRepository.InsertAsync(user);
+            return Ok(created);
         }
 
         [HttpPost("login")]
@@ -53,7 +53,8 @@ namespace TodoApp.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState.GetErrors());
 
-            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Name == input.Name);
+            var user = await _userRepository.GetQueryable()
+                .AsNoTracking().FirstOrDefaultAsync(x => x.Name == input.Name);
 
             if (user == null)
             {

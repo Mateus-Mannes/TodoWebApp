@@ -12,6 +12,10 @@ namespace TodoApp.Repositories
             _context = context;
             table = _context.Set<T>();
         }
+        public IQueryable<T> GetQueryable()
+        {
+            return table;
+        }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await table.ToListAsync();
@@ -20,17 +24,18 @@ namespace TodoApp.Repositories
         {
             return await table.FindAsync(id);
         }
-        public async Task InsertAsync(T obj)
+        public async Task<T> InsertAsync(T obj)
         {
-            await table.AddAsync(obj);
+            var created = await table.AddAsync(obj);
             await _context.SaveChangesAsync();
+            return created.Entity;
         }
         public async Task UpdateAsync(T obj)
         {
             table.Update(obj);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(object id)
+        public async Task DeleteAsync(int id)
         {
             T existing = await table.FindAsync(id);
             table.Remove(existing);

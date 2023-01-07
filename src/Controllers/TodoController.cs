@@ -8,6 +8,7 @@ using System.Linq;
 using AutoMapper;
 using TodoApp.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using TodoApp.Repositories;
 
 namespace TodoApp.Controllers
 {
@@ -17,13 +18,13 @@ namespace TodoApp.Controllers
     [Authorize(Roles = "user")]
     public class TodoController : ControllerBase
     {
-        private readonly TodoAppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IRepository<Todo> _todoRepository;
 
-        public TodoController(TodoAppDbContext context, IMapper mapper)
+        public TodoController(IMapper mapper, IRepository<Todo> todoRepository)
         {
-            _context = context;
             _mapper = mapper;
+            _todoRepository = todoRepository;
         }
 
         [HttpPost]
@@ -31,14 +32,13 @@ namespace TodoApp.Controllers
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 
-            var count = await _context.Todos.AsNoTracking()
+            var count = await _todoRepository.GetQueryable().AsNoTracking()
                 .Where(x => x.TodoGroupId == input.TodoGroupId).CountAsync();
             if (count >= 20) return BadRequest("Todos limit reached");
 
-            var todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
-            var created = await _context.Todos.AddAsync(todo);
-            await _context.SaveChangesAsync();
-            return Ok(created.Entity);
+            Todo todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
+            var created = await _todoRepository.InsertAsync(todo);
+            return Ok(created);
         }
 
         [HttpPut]
@@ -46,13 +46,12 @@ namespace TodoApp.Controllers
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 
-            var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == input.Id);
+            var todo = await _todoRepository.GetQueryable().FirstOrDefaultAsync(x => x.Id == input.Id);
             if (todo == null) return NotFound("Todo not found");
 
             todo.Description = input.Description;
             todo.DeadLine = input.DeadLine;
-            _context.Todos.Update(todo);
-            await _context.SaveChangesAsync();
+            await _todoRepository.UpdateAsync(todo);
             return Ok(todo);
         }
 
@@ -60,11 +59,10 @@ namespace TodoApp.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            var todo = await _context.Todos.FirstOrDefaultAsync(x => x.Id == id);
+            var todo = await _todoRepository.GetQueryable().FirstOrDefaultAsync(x => x.Id == id);
             if (todo == null) return NotFound("Todo not found");
 
-            _context.Todos.Remove(todo);
-            await _context.SaveChangesAsync();
+            await _todoRepository.DeleteAsync(todo.Id);
             return Ok(todo);
         }
     }
