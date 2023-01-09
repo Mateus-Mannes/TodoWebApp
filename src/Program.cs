@@ -91,7 +91,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddSingleton<IMapper>(mapper);
     builder.Services.AddTransient<TokenService>();
 
-    builder.Services.AddTransient<IRepository<Todo>, Repository<Todo>>();
-    builder.Services.AddTransient< IRepository<TodoGroup>,Repository <TodoGroup>>();
-    builder.Services.AddTransient<IRepository<User>,Repository <User>>();
+    builder.Services.AddScoped<IRepository<Todo>, Repository<Todo>>();
+    builder.Services.AddScoped< IRepository<TodoGroup>,Repository <TodoGroup>>();
+    builder.Services.AddScoped<IRepository<User>,Repository <User>>();
 }
