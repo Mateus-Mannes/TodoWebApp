@@ -85,13 +85,13 @@ void ConfigureServices(WebApplicationBuilder builder)
     {
         options.UseSqlite(connection);
     });
-    
+    builder.Services.AddTransient<IRepository<Todo>, Repository<Todo>>();
+    builder.Services.AddTransient<IRepository<TodoGroup>, Repository<TodoGroup>>();
+    builder.Services.AddTransient<IRepository<User>, Repository<User>>();
+
     var mapperCfg = new MapperConfiguration(cfg => {cfg.AddProfile<TodoAppAutoMapperProfile>();});
     var mapper = mapperCfg.CreateMapper();
     builder.Services.AddSingleton<IMapper>(mapper);
-    builder.Services.AddTransient<TokenService>();
 
-    builder.Services.AddScoped<IRepository<Todo>, Repository<Todo>>();
-    builder.Services.AddScoped< IRepository<TodoGroup>,Repository <TodoGroup>>();
-    builder.Services.AddScoped<IRepository<User>,Repository <User>>();
+    builder.Services.AddTransient<TokenService>();
 }

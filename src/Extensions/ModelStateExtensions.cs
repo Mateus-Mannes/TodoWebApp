@@ -2,7 +2,7 @@
 
 namespace TodoApp.Extensions
 {
-    public static class ModelStateExtension
+    public static class ModelStateExtensions
     {
         public static List<string> GetErrors(this ModelStateDictionary modelStateDictionary)
         {
