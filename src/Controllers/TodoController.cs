@@ -12,11 +12,9 @@ using TodoApp.Repositories;
 
 namespace TodoApp.Controllers
 {
-    [ControllerAttribute]
-    [ApiController]
     [Route("todo")]
     [Authorize(Roles = "user")]
-    public class TodoController : ControllerBase
+    public class TodoController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IRepository<Todo> _todoRepository;

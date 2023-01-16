@@ -8,11 +8,9 @@ using TodoApp.Repositories;
 
 namespace TodoApp.Controllers
 {
-    [ControllerAttribute]
-    [ApiController]
     [Route("todo-group")]
     [Authorize(Roles = "user")]
-    public class TodoGroupController : ControllerBase
+    public class TodoGroupController : Controller
     {
         private readonly IRepository<TodoGroup> _todoGroupRepository;
         private readonly IRepository<User> _userRepository;

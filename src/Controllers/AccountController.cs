@@ -11,10 +11,8 @@ using TodoApp.Repositories;
 
 namespace TodoApp.Controllers
 {
-    [ControllerAttribute]
-    [ApiController]
     [Route("account")]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
         private readonly IRepository<User> _userRepository;
         private readonly TokenService _tokenService;

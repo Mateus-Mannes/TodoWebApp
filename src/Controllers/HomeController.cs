@@ -2,9 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApp.Controllers;
 
-[ApiController]
 [Route("[controller]")]
-public class HomeController : ControllerBase
+public class HomeController : Controller
 {
     [HttpGet]
     public IActionResult Get()
