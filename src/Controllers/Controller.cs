@@ -2,7 +2,7 @@
 
 namespace TodoApp.Controllers
 {
-    [ControllerAttribute]
+    [TodoApp.Controllers.ControllerAtribute]
     [ApiController]
     public class Controller : ControllerBase
     {

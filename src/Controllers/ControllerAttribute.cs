@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using TodoApp;
 
-namespace Blog.Attributes;
+namespace TodoApp.Controllers;
 
 [AttributeUsage(validOn: AttributeTargets.Class | AttributeTargets.Method)]
 public class ControllerAtribute : Attribute, IAsyncActionFilter
