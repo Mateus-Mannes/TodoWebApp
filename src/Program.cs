@@ -10,6 +10,7 @@ using TodoApp.Services;
 using Microsoft.AspNetCore.ResponseCompression;
 using TodoApp.Repositories;
 using TodoApp.Domain;
+using TodoApp.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureAuthentication(builder);
@@ -85,13 +86,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     {
         options.UseSqlite(connection);
     });
-    builder.Services.AddTransient<IRepository<Todo>, Repository<Todo>>();
-    builder.Services.AddTransient<IRepository<TodoGroup>, Repository<TodoGroup>>();
-    builder.Services.AddTransient<IRepository<User>, Repository<User>>();
 
-    var mapperCfg = new MapperConfiguration(cfg => {cfg.AddProfile<TodoAppAutoMapperProfile>();});
-    var mapper = mapperCfg.CreateMapper();
-    builder.Services.AddSingleton<IMapper>(mapper);
-
+    builder.Services.AddRepositories();
+    builder.Services.AddMapper();
     builder.Services.AddTransient<TokenService>();
 }

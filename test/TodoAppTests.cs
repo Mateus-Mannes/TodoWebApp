@@ -9,27 +9,21 @@ namespace TodoApp.Tests;
 [TestClass]
 public class TodoAppTests : TodoAppTestBase
 {
+    private readonly TodoController _todoController;
     private readonly IRepository<Todo> _todoRepository;
 
     public TodoAppTests()
     {
         _todoRepository = GetRequiredService<IRepository<Todo>>();
+        _todoController = GetRequiredService<TodoController>();
     }
 
 
     [TestMethod]
-    [Category("Todo")]
-    public async Task ShouldCrea()
+    public async Task Should_Create_Todo()
     {
-        var teste = await _todoRepository.GetAllAsync();
-        await _todoRepository.InsertAsync(new Todo() { Description = "test" });
-        Assert.Fail();
-    }
-
-    [TestMethod]
-    [Category("Todo")]
-    public void ShouldCrea2()
-    {
+        await _todoController.CreateAsync(new TodoCreateViewModel { Description = "test" });
+        Assert.IsTrue(_todoRepository.GetQueryable().Count() == 1);
         Assert.Fail();
     }
 
