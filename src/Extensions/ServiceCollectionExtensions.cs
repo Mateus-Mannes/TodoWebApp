@@ -10,7 +10,7 @@ namespace TodoApp.Extensions
     {
         public static void AddRepositories(this IServiceCollection services, TodoAppDbContext context = null)
         {
-            var dbSets = context.GetDbSets();
+            var dbSets = DbContextExtensions.GetDbSets();
             foreach (var dbSet in dbSets)
             {
                 var setType = dbSet.PropertyType.GenericTypeArguments[0];
