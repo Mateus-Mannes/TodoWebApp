@@ -22,9 +22,8 @@ public class TodoAppTests : TodoAppTestBase
     [TestMethod]
     public async Task Should_Create_Todo()
     {
-        await _todoController.CreateAsync(new TodoCreateViewModel { Description = "test" });
+        await _todoController.CreateAsync(new TodoCreateViewModel { Description = "test", TodoGroupId = 1 });
         Assert.IsTrue(_todoRepository.GetQueryable().Count() == 1);
-        Assert.Fail();
     }
 
 
