@@ -10,11 +10,8 @@ namespace TodoApp.Tests
 {
     public static class TodoAppTestsDataSeed
     {
-        public static void SeedTests(this TodoAppDbContext context)
+        public static void SeedTests(this TodoAppDbContext context, User user)
         {
-            User user = new User() { Name = "User", Slug = "user", PasswordHash = "123", 
-                TodoGroups = new List<TodoGroup>() { new TodoGroup() { Name = "Todos", Slug = "todos"} }
-                };
             context.Users.Add(user);
             context.SaveChanges();
         }

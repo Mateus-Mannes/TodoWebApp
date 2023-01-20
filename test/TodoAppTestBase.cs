@@ -22,6 +22,13 @@ namespace TodoApp.Tests
 {
     public class TodoAppTestBase : IDisposable
     {
+        protected User User = new User()
+        {
+            Name = "User",
+            Slug = "user",
+            PasswordHash = "123",
+            TodoGroups = new List<TodoGroup>() { new TodoGroup() { Name = "Todos", Slug = "todos" } }
+        };
         private readonly SqliteConnection connection;
         private IServiceCollection Services = new ServiceCollection();
         public TodoAppTestBase()
@@ -52,7 +59,7 @@ namespace TodoApp.Tests
                 .UseSqlite(this.connection)
                 .Options);
             dbContext.Database.EnsureCreated();
-            dbContext.SeedTests();
+            dbContext.SeedTests(User);
             Services.AddRepositories(dbContext);
         }
 
