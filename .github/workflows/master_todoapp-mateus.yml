@@ -21,12 +21,12 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-          
-      - name: Testing
-        run: dotnet test --no-build
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
 
       - name: dotnet publish
         run: dotnet publish src/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
