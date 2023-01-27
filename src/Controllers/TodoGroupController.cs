@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using TodoApp.Repositories;
+using TodoApp.Extensions;
 
 namespace TodoApp.Controllers
 {
@@ -26,8 +27,6 @@ namespace TodoApp.Controllers
         {
             var lists = await _todoGroupRepository.GetQueryable().AsNoTracking()
                 .Include(x => x.Todos)
-                .Include(x => x.User)
-                .Where(x => x.User.Slug == User.Identity.Name)
                 .ToListAsync();
 
             return Ok(lists);
@@ -36,22 +35,13 @@ namespace TodoApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(string name)
         {
-            if (await (_todoGroupRepository.GetQueryable().AsNoTracking().Include(x => x.User)
-                .AnyAsync(x => x.Name == name && x.User.Slug == User.Identity.Name)))
-            {
+            if (await (_todoGroupRepository.GetQueryable().AsNoTracking().AnyAsync(x => x.Name == name)))
                 return BadRequest("A list with this name already exists, try another one");
-            }
 
-            if (await (_todoGroupRepository.GetQueryable().AsNoTracking()
-                .Include(x => x.User).Where(x => x.User.Slug == User.Identity.Name).CountAsync()) >= 10)
-            {
+            if (await (_todoGroupRepository.GetQueryable().AsNoTracking().CountAsync()) >= 10)
                 return BadRequest("Todo Lists limit reached");
-            }
 
-            var user = await _userRepository.GetQueryable()
-                .Where(x => x.Slug == User.Identity.Name).FirstOrDefaultAsync();
-
-            var created = await _todoGroupRepository.InsertAsync(new TodoGroup(name, user.Id));
+            var created = await _todoGroupRepository.InsertAsync(new TodoGroup(name, User.UserId()));
             return Ok(created);
         }
 

@@ -17,7 +17,8 @@ namespace TodoApp.Services
             {
                 Subject = new ClaimsIdentity(new List<Claim>() { 
                     new Claim(ClaimTypes.Name, user.Slug),
-                    new Claim(ClaimTypes.Role, "user")
+                    new Claim("UserId", user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, "user"),
                 }),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),

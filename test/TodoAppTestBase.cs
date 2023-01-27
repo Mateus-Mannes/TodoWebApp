@@ -24,6 +24,7 @@ namespace TodoApp.Tests
     {
         protected User User = new User()
         {
+            Id = 1,
             Name = "User",
             Slug = "user",
             PasswordHash = "123",
@@ -31,8 +32,10 @@ namespace TodoApp.Tests
         };
         private readonly SqliteConnection connection;
         private IServiceCollection Services = new ServiceCollection();
+        private HttpContextAccessor HttpContextAccessor;
         public TodoAppTestBase()
         {
+            HttpContextAccessor = new HttpContextAccessor() { HttpContext = new DefaultHttpContext() { User = CreateUser() } };
             this.connection = new SqliteConnection("DataSource=:memory:");
             this.connection.Open();
             ConfigureDb();
@@ -57,7 +60,7 @@ namespace TodoApp.Tests
         {
             var dbContext = new TodoAppDbContext(new DbContextOptionsBuilder<TodoAppDbContext>()
                 .UseSqlite(this.connection)
-                .Options);
+                .Options, HttpContextAccessor);
             dbContext.Database.EnsureCreated();
             dbContext.SeedTests(User);
             Services.AddRepositories(dbContext);
@@ -79,16 +82,22 @@ namespace TodoApp.Tests
                 var parameters = constructor.GetParameters();
                 var dependencies = parameters.Select(x => GetRequiredService(x.ParameterType)).ToArray();
                 var obj = constructor.Invoke(dependencies);
-                var user = new ClaimsPrincipal( new ClaimsIdentity(new List<Claim>() {
-                    new Claim(ClaimTypes.Name, "user"),
-                    new Claim(ClaimTypes.Role, "user")
-                }));
+
                 var controllerContext = obj.GetType().GetProperties()
                     .First(x => x.Name == "ControllerContext").GetValue(obj);
                 controllerContext.GetType().GetProperties().First(x => x.Name == "HttpContext")
-                    .SetValue(controllerContext, new DefaultHttpContext() { User = user } );
+                    .SetValue(controllerContext, HttpContextAccessor.HttpContext);
                 Services.AddTransient(constructor.DeclaringType, x => obj);
             }
+        }
+
+        private ClaimsPrincipal CreateUser()
+        {
+            return new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>() {
+                    new Claim(ClaimTypes.Name, User.Slug),
+                    new Claim("UserId", User.Id.ToString()),
+                    new Claim(ClaimTypes.Role, "user")
+                }));
         }
     }
 }
