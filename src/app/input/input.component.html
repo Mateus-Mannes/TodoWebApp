@@ -1,0 +1,21 @@
+<form class="input-form d-flex">
+      <button class="input-form__button btn btn-light d-flex align-items-center justify-content-center">
+        <mat-icon>add</mat-icon>
+      </button>
+      <input type="text" class="input-form__text form-control" placeholder="New Todo ..." aria-label="Todo">
+      <mat-form-field class="example-full-width" style="width: 0px; height: 0px;">
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker touchUi="true" #picker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+            <button mat-raised-button color="warn" [disabled]="picker.datepickerInput.getStartValue() == null" (click)="discard()">Discard</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+      <button (click)="picker.open()"
+      class="input-form__button btn btn-light d-flex align-items-center justify-content-center">
+        <mat-icon *ngIf="picker.datepickerInput.getStartValue() != null">alarm</mat-icon>
+        <mat-icon *ngIf="picker.datepickerInput.getStartValue() == null">alarm_add</mat-icon>
+      </button>
+  </form>
