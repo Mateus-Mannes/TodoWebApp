@@ -2,7 +2,7 @@ import { Component, OnInit, Output, ViewChild, EventEmitter, ElementRef } from '
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatInput } from '@angular/material/input';
 import { raceWith } from 'rxjs';
-import { Todo } from '../entities/todo';
+import { Todo } from '../../entities/todo';
 
 @Component({
   selector: 'app-input',

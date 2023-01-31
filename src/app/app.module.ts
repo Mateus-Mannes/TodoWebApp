@@ -26,7 +26,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ApplicationComponent } from './application/application.component';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
-import { InputComponent } from './input/input.component';
+import { InputComponent } from './input/input/input.component';
 
 @NgModule({
   declarations: [
