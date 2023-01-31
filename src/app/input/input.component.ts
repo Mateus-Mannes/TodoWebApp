@@ -20,7 +20,7 @@ export class InputComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  discard(){
+  discardPickedDate(){
     this.datepicker.select(null);
     this.datepicker.close();
   }
@@ -29,7 +29,18 @@ export class InputComponent implements OnInit {
     const todo = new Todo();
     todo.description = this.todoDescription.nativeElement.value;
     todo.deadLine = this.datepicker.datepickerInput.getStartValue();
-    if(todo.description != '') this.createTodo.emit(todo);
+    if(todo.description != ''){
+      this.createTodo.emit(todo);
+      this.resetInput();
+    }
+  }
+
+  resetInput(){
+    this.todoDescription.nativeElement.value = '';
+      this.discardPickedDate();
+      setTimeout(()=>{ // this will make the execution after the above boolean has changed
+        this.todoDescription.nativeElement.focus();
+      },0);
   }
 
 }
