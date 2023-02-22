@@ -1,3 +1,4 @@
+import { InputComponent } from './input/input/input.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApplicationComponent } from './application/application.component';
@@ -9,7 +10,8 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 const routes: Routes = [
   { path: '', component: ApplicationComponent },
   {path: 'login', component: LoginComponent},
-  {path: 'user', component: CreateUserComponent}
+  {path: 'user', component: CreateUserComponent},
+  {path: 'input', component: InputComponent}
 ];
 
 @NgModule({
