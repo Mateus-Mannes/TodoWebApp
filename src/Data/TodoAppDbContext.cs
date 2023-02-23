@@ -7,11 +7,11 @@ namespace TodoApp.Data
 {
     public class TodoAppDbContext : DbContext
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly int _userId;
+        public TodoAppDbContext(DbContextOptions<TodoAppDbContext> options, int userId) : base(options)
+            =>  _userId = userId;
 
-        public TodoAppDbContext(DbContextOptions<TodoAppDbContext> options, IHttpContextAccessor httpContextAccessor) : base (options) {
-            _httpContextAccessor = httpContextAccessor;
-        }
+        public TodoAppDbContext(DbContextOptions<TodoAppDbContext> options) : base (options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Todo> Todos { get; set; }
@@ -23,9 +23,8 @@ namespace TodoApp.Data
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new TodoMap());
 
-            var userId = _httpContextAccessor.HttpContext.User.UserId();
             modelBuilder.Entity<TodoGroup>().HasQueryFilter(x => 
-                 EF.Property<int>(x, "UserId") == userId);
+                 EF.Property<int>(x, "UserId") == _userId);
         }
     }
 }

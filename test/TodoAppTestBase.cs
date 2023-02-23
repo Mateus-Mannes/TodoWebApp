@@ -60,7 +60,7 @@ namespace TodoApp.Tests
         {
             var dbContext = new TodoAppDbContext(new DbContextOptionsBuilder<TodoAppDbContext>()
                 .UseSqlite(this.connection)
-                .Options, HttpContextAccessor);
+                .Options, User.Id );
             dbContext.Database.EnsureCreated();
             dbContext.SeedTests(User);
             Services.AddRepositories(dbContext);

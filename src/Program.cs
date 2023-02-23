@@ -82,12 +82,7 @@ void LoadConfiguration(WebApplication app)
 void ConfigureServices(WebApplicationBuilder builder)
 {
     builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-    var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-    builder.Services.AddDbContext<TodoAppDbContext>(options =>
-    {
-        options.UseSqlite(connection);
-    });
-
+    builder.Services.AddDbContext();
     builder.Services.AddRepositories();
     builder.Services.AddMapper();
     builder.Services.AddTransient<TokenService>();

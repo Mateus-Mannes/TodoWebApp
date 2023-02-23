@@ -36,5 +36,15 @@ namespace TodoApp.Extensions
             var mapper = mapperCfg.CreateMapper();
             services.AddSingleton<IMapper>(mapper);
         }
+
+        public static void AddDbContext(this IServiceCollection services)
+        {
+            services.AddTransient<ITodoAppDbContextFactory, TodoAppDbContextFactory>();
+            services.AddScoped(provider =>
+            {
+                var factory = provider.GetRequiredService<ITodoAppDbContextFactory>();
+                return factory.CreateContext();
+            });
+        }
     }
 }
