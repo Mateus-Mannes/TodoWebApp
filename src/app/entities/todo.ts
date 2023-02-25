@@ -5,4 +5,6 @@ export class Todo {
     public createdAt: Date;
     public todoGroupId: number;
     public userId: number;
+
+    constructor() {}
 }

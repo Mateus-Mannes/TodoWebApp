@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Todo } from 'src/app/entities/todo';
 
 @Component({
   selector: 'app-grid',
@@ -11,5 +12,7 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  @Input() todos: Todo[] = [new Todo(), new Todo()];
 
 }
