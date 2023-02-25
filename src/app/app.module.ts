@@ -1,3 +1,4 @@
+import { GridModule } from './grid/grid.module';
 import { AlertService } from './alert-service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { APIInterceptor } from './api-interceptor';
 import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { GridComponent } from './grid/grid.component';
+import { GridComponent } from './grid-leg/grid.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -56,7 +57,8 @@ import { InputComponent } from './input/input/input.component';
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    GridModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

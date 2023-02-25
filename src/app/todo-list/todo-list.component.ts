@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth-service';
 import { Todo } from '../entities/todo';
 import { TodoGroup } from '../entities/todo-group';
-import { GridComponent } from '../grid/grid.component';
+import { GridComponent } from '../grid-leg/grid.component';
 
 @Component({
   selector: 'app-todo-list',
