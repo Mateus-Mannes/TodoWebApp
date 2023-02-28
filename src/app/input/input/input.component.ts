@@ -26,6 +26,7 @@ export class InputComponent implements OnInit {
   }
 
   emitTodoCreation(){
+    if(this.todoDescription.nativeElement.value == '') return;
     const todo = new Todo();
     todo.description = this.todoDescription.nativeElement.value;
     todo.deadLine = this.datepicker.datepickerInput.getStartValue();

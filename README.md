@@ -36,12 +36,14 @@ flowchart TB
       GridComponent[GridComponent \n - Todos CRUD]
       -- 1 - * -->
       TodoComponent
+
+      TodoComponent -- pop up -->EditTodoComponent
     end
 
     GroupsModel -- Fills the grid --> GridModel
 
     subgraph InputModel
-      InputComponent
+      InputComponent[InputComponent \n emits todo creation]
     end
 
     InputModel -- Adds todos --> GridModel
