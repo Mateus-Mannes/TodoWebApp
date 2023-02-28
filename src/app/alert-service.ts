@@ -34,4 +34,8 @@ export class AlertService  {
       notification.outerHTML = "";
     }
   }
+
+  disalertAll(){
+    document.querySelectorAll('#alertNotification').forEach(x => x.outerHTML = "");
+  }
 }

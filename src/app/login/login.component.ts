@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
     .subscribe({
       next: value => {
         this.authService.setSession(value);
+        this.alertService.disalertAll();
         this.router.navigateByUrl('/');
       }, error: err => {
         this.loading = false;
