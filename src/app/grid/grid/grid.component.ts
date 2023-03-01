@@ -42,7 +42,7 @@ export class GridComponent implements OnInit {
   deleteTodo(todo: Todo){
     this.removeTodoFromGrid(todo);
     this._httpClient.delete(`todo/${todo.id}`).subscribe({
-      next: () => {}, 
+      next: () => {},
       error: value => {
         this._alertService.alert('Error on completing todo - '+value.message, 'danger');
         this.todos.push(todo);
@@ -50,7 +50,16 @@ export class GridComponent implements OnInit {
     });
   }
 
-  updateTodo(){
-    return;
+  updateTodo(todo: Todo){
+    let dialogRef = this._matDialog.open(EditTodoComponent, { data: todo, maxWidth: "700px", width: "90%" });
+    dialogRef.afterClosed().subscribe(todoUpdate => {
+      if('description' in todoUpdate && 'id' in todoUpdate){
+        let index = this.todos.findIndex(x => x.id == todo.id);
+        this.todos[index].description = todoUpdate?.description;
+        this.todos[index].deadLine = todoUpdate?.deadLine;
+      } else if(todoUpdate != undefined) {
+        this._alertService.alert('Error on updating todo', 'danger');
+      }
+    })
   }
 }
