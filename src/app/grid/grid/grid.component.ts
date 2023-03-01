@@ -21,7 +21,7 @@ export class GridComponent implements OnInit {
     let dialogRef = this._matDialog.open(EditTodoComponent, { data: new Todo(), maxWidth: "700px", width: "90%" });
   }
 
-  @Input() todos: Todo[] = [new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo()];
+  @Input() todos: Todo[] = [{description: 'teste', id: 0, deadLine: new Date(), todoGroupId: 0, createdAt: new Date(), userId: 0}];
 
   createTodo(todo: Todo) {
     this.todos.push(todo);

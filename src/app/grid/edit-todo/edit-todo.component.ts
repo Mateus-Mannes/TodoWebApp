@@ -13,7 +13,7 @@ export class EditTodoComponent implements OnInit {
   form: FormGroup;
 
   constructor(private readonly _matDialogRef: MatDialogRef<EditTodoComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly _data: Todo) { 
+    @Inject(MAT_DIALOG_DATA) private readonly _data: Todo) {
       this. form = new FormGroup({
         description: new FormControl(_data.description, [Validators.required]),
         deadLine:  new FormControl(_data.deadLine) });

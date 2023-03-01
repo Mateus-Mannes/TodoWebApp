@@ -1,8 +1,8 @@
 <div style="width: 100%; height: 3rem; padding-left: 1rem; padding-right: 1rem;" class="d-flex align-items-center justify-content-between border rounded">
   <button (click)="emitTodoComplete()" style="width: 1.6em; height: 1.6em;" type="button" class="btn btn-outline-success rounded-circle btn-sm">
   </button>
-  <p>teste</p>
-  <p>01/01/2022</p>
+  <p>{{ todo.description }}</p>
+  <p>{{ todo.deadLine }}</p>
   <button (click)="emitTodoEdit()" type="button" class="btn btn-outline-secondary btn-sm">
     edit
   </button>
