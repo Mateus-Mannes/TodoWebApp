@@ -3,16 +3,23 @@ import { CommonModule } from '@angular/common';
 import { GridComponent } from './grid/grid.component';
 import { TodoComponent } from './todo/todo.component';
 import {MatIconModule} from '@angular/material/icon';
+import { EditTodoComponent } from './edit-todo/edit-todo.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     GridComponent,
-    TodoComponent
+    TodoComponent,
+    EditTodoComponent
   ],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    ReactiveFormsModule
   ]
 })
 export class GridModule { }

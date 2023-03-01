@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from 'src/app/alert-service';
+import { EditComponent } from 'src/app/edit/edit.component';
 import { Todo } from 'src/app/entities/todo';
+import { EditTodoComponent } from '../edit-todo/edit-todo.component';
 
 @Component({
   selector: 'app-grid',
@@ -11,9 +14,11 @@ import { Todo } from 'src/app/entities/todo';
 export class GridComponent implements OnInit {
 
   constructor(private readonly _httpClient: HttpClient,
-    private readonly _alertService : AlertService) { }
+    private readonly _alertService : AlertService,
+    private readonly _matDialog: MatDialog) { }
 
   ngOnInit(): void {
+    let dialogRef = this._matDialog.open(EditTodoComponent, { data: new Todo(), maxWidth: "700px", width: "90%" });
   }
 
   @Input() todos: Todo[] = [new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo(),new Todo(), new Todo()];
@@ -43,9 +48,9 @@ export class GridComponent implements OnInit {
         this.todos.push(todo);
       }
     });
+  }
 
-    updateTodo(){
-      
-    }
+  updateTodo(){
+    return;
   }
 }
