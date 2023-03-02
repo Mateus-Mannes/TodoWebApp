@@ -2,7 +2,7 @@
   <button (click)="emitTodoComplete()" style="width: 1.6em; height: 1.6em;" type="button" class="btn btn-outline-success rounded-circle btn-sm">
   </button>
   <p>{{ todo.description }}</p>
-  <p>{{ todo.deadLine }}</p>
+  <p>{{ todo.deadLine | date: 'mediumDate' }}</p>
   <button (click)="emitTodoEdit()" type="button" class="btn btn-outline-secondary btn-sm">
     edit
   </button>

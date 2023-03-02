@@ -6,7 +6,7 @@
       </div>
       <div class="mb-3">
         <label for="deadline" class="form-label">Dead Line</label>
-        <input matInput type="date" class="form-control" id="deadline" formControlName="deadline">
+        <input matInput type="date" class="form-control" #deadline formControlName="deadLine">
       </div>
       <div class="d-flex flex-row-reverse">
           <button (click)="close()" style="margin-left: 1em;" type="button" class="btn btn-light">Cancel</button>
