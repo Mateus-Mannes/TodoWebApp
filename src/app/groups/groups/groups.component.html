@@ -1,0 +1,36 @@
+<nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Todo App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Todo App</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column justify-content-between">
+        <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+          <h2 class="fs-6">Todo Lists:</h2>
+          <li class="nav-item">
+            <div class="d-flex justify-content-between">
+              <a class="nav-link active" aria-current="page" href="#">Todos</a>
+              <li class="btn-group dropstart">
+                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  ...
+                </button>
+                <ul style="position: absolute;" class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Delete list</a></li>
+                </ul>
+              </li>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-outline-secondary">Log Out</button>
+      </div>
+    </div>
+  </div>
+</nav>

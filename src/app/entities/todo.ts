@@ -6,5 +6,6 @@ export class Todo {
     public todoGroupId: number;
     public userId: number;
 
-    constructor() {}
+    constructor() {
+    }
 }

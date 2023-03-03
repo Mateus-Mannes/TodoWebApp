@@ -1,3 +1,4 @@
+import { GroupsModule } from './groups/groups.module';
 import { GridModule } from './grid/grid.module';
 import { AlertService } from './alert-service';
 import { NgModule } from '@angular/core';
@@ -21,10 +22,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
-import { TodoListComponent } from './todo-list/todo-list.component';
 import { AuthService } from './auth-service';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { GroupsComponent } from './groups/groups.component';
 import { ApplicationComponent } from './application/application.component';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { InputComponent } from './input/input/input.component';
@@ -35,9 +34,7 @@ import { InputComponent } from './input/input/input.component';
     GridComponent,
     EditComponent,
     LoginComponent,
-    TodoListComponent,
     CreateUserComponent,
-    GroupsComponent,
     ApplicationComponent,
     GroupDialogComponent,
     InputComponent
@@ -58,7 +55,8 @@ import { InputComponent } from './input/input/input.component';
     MatNativeDateModule,
     MatInputModule,
     MatButtonModule,
-    GridModule
+    GridModule,
+    GroupsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
