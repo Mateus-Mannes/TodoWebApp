@@ -57,6 +57,16 @@ export class GridComponent implements OnInit {
         let index = this.todos.findIndex(x => x.id == todo.id);
         this.todos[index].description = todoUpdate?.description;
         this.todos[index].deadLine = todoUpdate?.deadLine;
+
+        this._httpClient.put(`todo`, todoUpdate).subscribe({
+          next: () => {},
+          error: value => {
+            this._alertService.alert('Error on updating todo - '+ value.message, 'danger');
+            this.todos[index].description = todo.description;
+            this.todos[index].deadLine = todo.deadLine;
+          }
+        });
+
       } else if(todoUpdate != undefined) {
         this._alertService.alert('Error on updating todo', 'danger');
       }
