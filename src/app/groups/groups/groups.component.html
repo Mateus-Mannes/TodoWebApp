@@ -15,6 +15,12 @@
           <li class="nav-item">
             <div class="d-flex justify-content-between">
               <a class="nav-link active" aria-current="page" href="#">Todos</a>
+            </div>
+          </li>
+
+          <li class="nav-item" *ngFor="let g of groups">
+            <div *ngIf="g.name != 'Todos'" class="d-flex justify-content-between">
+              <a class="nav-link" href="#">{{ g.name }}</a>
               <li class="btn-group dropstart">
                 <button style="max-height: 2em;position: relative;top: 0.5em;" 
                 class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -26,48 +32,7 @@
               </li>
             </div>
           </li>
-          <li class="nav-item">
-            <div class="d-flex justify-content-between">
-              <a class="nav-link" href="#">Link</a>
-              <li class="btn-group dropstart">
-                <button style="max-height: 2em;position: relative;top: 0.5em;" 
-                class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <p style="position: relative; top:-0.6em" class="fs-3">...</p>
-                </button>
-                <ul style="position: absolute;" class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Delete list</a></li>
-                </ul>
-              </li>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="d-flex justify-content-between">
-              <a class="nav-link" href="#">Link</a>
-              <li class="btn-group dropstart">
-                <button style="max-height: 2em;position: relative;top: 0.5em;" 
-                class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <p style="position: relative; top:-0.6em" class="fs-3">...</p>
-                </button>
-                <ul style="position: absolute;" class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Delete list</a></li>
-                </ul>
-              </li>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="d-flex justify-content-between">
-              <a class="nav-link" href="#">Link</a>
-              <li class="btn-group dropstart">
-                <button style="max-height: 2em;position: relative;top: 0.5em;" 
-                class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <p style="position: relative; top:-0.6em" class="fs-3">...</p>
-                </button>
-                <ul style="position: absolute;" class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Delete list</a></li>
-                </ul>
-              </li>
-            </div>
-          </li>
+          
           <form style="margin-top: 2em;" class="d-flex">
             <input class="form-control me-2" type="text" placeholder="New List Name" aria-label="Name">
             <button class="btn btn-outline-success" type="submit">+</button>
