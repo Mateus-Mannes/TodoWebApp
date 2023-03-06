@@ -35,7 +35,10 @@
           
           <form style="margin-top: 2em;" class="d-flex">
             <input class="form-control me-2" type="text" placeholder="New List Name" aria-label="Name">
-            <button class="btn btn-outline-success" type="submit">+</button>
+            <button class="btn btn-outline-success" type="submit">
+              <div *ngIf="!loading">+</div>
+              <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+            </button>
           </form>
         </ul>
         <button type="button" class="btn btn-outline-secondary">Log Out</button>
