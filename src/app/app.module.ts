@@ -24,7 +24,6 @@ import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth-service';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { ApplicationComponent } from './application/application.component';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { InputComponent } from './input/input/input.component';
 
@@ -35,7 +34,6 @@ import { InputComponent } from './input/input/input.component';
     EditComponent,
     LoginComponent,
     CreateUserComponent,
-    ApplicationComponent,
     GroupDialogComponent,
     InputComponent
   ],
