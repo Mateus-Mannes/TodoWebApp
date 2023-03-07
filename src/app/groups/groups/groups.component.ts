@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertService } from 'src/app/alert-service';
+import { AuthService } from 'src/app/auth-service';
 import { Todo } from 'src/app/entities/todo';
 import { TodoGroup } from 'src/app/entities/todo-group';
 
@@ -11,7 +13,10 @@ import { TodoGroup } from 'src/app/entities/todo-group';
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(private readonly _httpClient: HttpClient,private readonly _alertService : AlertService) { }
+  constructor(private readonly _httpClient: HttpClient,
+    private readonly _alertService : AlertService,
+    private readonly _authService : AuthService,
+    private readonly _router : Router) { }
 
   ngOnInit(): void {
   }
@@ -54,13 +59,20 @@ export class GroupsComponent implements OnInit {
     this.groups.splice(index, 1);
   }
 
-  emitChangeGroup(group: TodoGroup){
+  emitChangeGroup(group: TodoGroup | undefined){
     this.changeGroup.emit(group);
   }
 
+  activeGroup(group: TodoGroup){
+    let old = (document.querySelector('.active') as HTMLImageElement);
+    old.className = 'nav-link';
+    let newGp = (document.getElementById('gp'+group?.id) as HTMLImageElement);
+    newGp.className = 'nav-link active';
+  }
+
   logout(){
-    this.authService.logout();
-    this.router.navigateByUrl('/login');
+    this._authService.logout();
+    this._router.navigateByUrl('/login');
   }
 
 }
