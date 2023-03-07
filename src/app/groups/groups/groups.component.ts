@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { AlertService } from 'src/app/alert-service';
 import { Todo } from 'src/app/entities/todo';
 import { TodoGroup } from 'src/app/entities/todo-group';
@@ -20,10 +20,13 @@ export class GroupsComponent implements OnInit {
   todos : TodoGroup | undefined = this.groups.find(x => x.slug = 'todos');
   @Output() changeGroup : EventEmitter<TodoGroup>;
   loading = false;
+  @ViewChild('newGroupName') newGroupName : ElementRef;
 
-  createGroup(groupName: string){
+  createGroup(){
+    let name = this.newGroupName.nativeElement.value;
+    if(name == '' || name == undefined) return;
     this.loading  = true
-    this._httpClient.post<TodoGroup>('todo-group', groupName).subscribe({
+    this._httpClient.post<TodoGroup>('todo-group', name).subscribe({
       next: res => {
         this.loading  = false;
         this.emitChangeGroup(res);
@@ -53,6 +56,11 @@ export class GroupsComponent implements OnInit {
 
   emitChangeGroup(group: TodoGroup){
     this.changeGroup.emit(group);
+  }
+
+  logout(){
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 
 }
