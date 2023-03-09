@@ -1,5 +1,5 @@
 .input-form {
-  max-width: 1200px;
+  width: 100%;
 }
 
 .input-form__button {
@@ -10,3 +10,4 @@
   margin-left: 1rem;
   margin-right: 1rem;
 }
+

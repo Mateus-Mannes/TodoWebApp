@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/services/auth-service';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ApplicationComponent } from './application/application.component';
+import { InputModule } from './application/input/input.module';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ApplicationComponent } from './application/application.component';
     MatInputModule,
     MatButtonModule,
     GridModule,
-    GroupsModule
+    GroupsModule,
+    InputModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

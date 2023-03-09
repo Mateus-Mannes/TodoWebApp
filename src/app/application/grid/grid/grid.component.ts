@@ -17,7 +17,6 @@ export class GridComponent implements OnInit {
     private readonly _matDialog: MatDialog) { }
 
   ngOnInit(): void {
-    let dialogRef = this._matDialog.open(EditTodoComponent, { data: new Todo(), maxWidth: "700px", width: "90%" });
   }
 
   @Input() todos: Todo[] = [{description: 'teste', id: 0, deadLine: new Date(), todoGroupId: 0, createdAt: new Date(), userId: 0}];
