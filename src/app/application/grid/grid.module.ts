@@ -5,7 +5,6 @@ import { TodoComponent } from './todo/todo.component';
 import {MatIconModule} from '@angular/material/icon';
 import { EditTodoComponent } from './edit-todo/edit-todo.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -20,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatDialogModule,
     ReactiveFormsModule
-  ]
+  ],
+  exports: [ GridComponent ]
 })
 export class GridModule { }

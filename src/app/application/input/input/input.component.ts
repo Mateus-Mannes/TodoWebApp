@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MatInput } from '@angular/material/input';
-import { raceWith } from 'rxjs';
-import { Todo } from '../../entities/todo';
+import { Todo } from 'src/app/shared/entities/todo';
 
 @Component({
   selector: 'app-input',

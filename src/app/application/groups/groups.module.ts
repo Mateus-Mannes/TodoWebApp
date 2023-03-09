@@ -12,6 +12,6 @@ import { GroupsComponent } from './groups/groups.component';
   imports: [
     CommonModule,
     MatIconModule
-  ]
+  ], exports: [ GroupsComponent ]
 })
 export class GroupsModule { }

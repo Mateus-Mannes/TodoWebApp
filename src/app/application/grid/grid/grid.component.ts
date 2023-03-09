@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertService } from 'src/app/alert-service';
-import { EditComponent } from 'src/app/edit/edit.component';
-import { Todo } from 'src/app/entities/todo';
+import { AlertService } from 'src/app/shared/services/alert-service';
+import { Todo } from 'src/app/shared/entities/todo';
 import { EditTodoComponent } from '../edit-todo/edit-todo.component';
 
 @Component({

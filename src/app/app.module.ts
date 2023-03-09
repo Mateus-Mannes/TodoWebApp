@@ -1,20 +1,17 @@
-import { GroupsModule } from './groups/groups.module';
-import { GridModule } from './grid/grid.module';
-import { AlertService } from './alert-service';
+import { GroupsModule } from './application/groups/groups.module';
+import { GridModule } from './application/grid/grid.module'; 
+import { AlertService } from './shared/services/alert-service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { APIInterceptor } from './api-interceptor';
-import {MatTableModule} from '@angular/material/table';
+import { APIInterceptor } from './shared/services/api-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { GridComponent } from './grid-leg/grid.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
-import { EditComponent } from './edit/edit.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -22,26 +19,21 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './auth-service';
+import { AuthService } from './shared/services/auth-service';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { GroupDialogComponent } from './group-dialog/group-dialog.component';
-import { InputComponent } from './input/input/input.component';
+import { ApplicationComponent } from './application/application.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GridComponent,
-    EditComponent,
     LoginComponent,
     CreateUserComponent,
-    GroupDialogComponent,
-    InputComponent
+    ApplicationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MatTableModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
     FormsModule,

@@ -8,6 +8,6 @@ import { CommonModule } from '@angular/common';
   declarations: [InputComponent],
   imports: [
     CommonModule
-  ]
+  ], exports: [ InputComponent ]
 })
 export class InputModule { }

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/alert-service';
-import { AuthService } from 'src/app/auth-service';
-import { Todo } from 'src/app/entities/todo';
-import { TodoGroup } from 'src/app/entities/todo-group';
+import { AlertService } from 'src/app/shared/services/alert-service';
+import { AuthService } from 'src/app/shared/services/auth-service';
+import { Todo } from 'src/app/shared/entities/todo';
+import { TodoGroup } from 'src/app/shared/entities/todo-group';
 
 @Component({
   selector: 'app-groups',

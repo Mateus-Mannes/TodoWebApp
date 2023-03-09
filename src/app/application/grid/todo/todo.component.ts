@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { Todo } from 'src/app/entities/todo';
+import { Todo } from 'src/app/shared/entities/todo';
 
 @Component({
   selector: 'app-todo',

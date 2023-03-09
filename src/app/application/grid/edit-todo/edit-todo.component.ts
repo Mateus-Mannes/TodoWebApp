@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Todo } from 'src/app/entities/todo';
+import { Todo } from 'src/app/shared/entities/todo';
 
 @Component({
   selector: 'app-edit-todo',

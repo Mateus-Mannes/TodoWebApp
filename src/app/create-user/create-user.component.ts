@@ -1,9 +1,8 @@
-import { AlertService } from './../alert-service';
+import { AlertService } from '../shared/services/alert-service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth-service';
 
 @Component({
   selector: 'app-create-user',
