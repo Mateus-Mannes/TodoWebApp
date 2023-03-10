@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/shared/services/alert-service';
 import { AuthService } from 'src/app/shared/services/auth-service';
 import { Todo } from 'src/app/shared/entities/todo';
 import { TodoGroup } from 'src/app/shared/entities/todo-group';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-groups',
@@ -13,25 +14,29 @@ import { TodoGroup } from 'src/app/shared/entities/todo-group';
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(private readonly _httpClient: HttpClient,
-    private readonly _alertService : AlertService,
-    private readonly _authService : AuthService,
-    private readonly _router : Router) { }
-
-  ngOnInit(): void {
-  }
-
+  form: FormGroup;
+  nameControl = new FormControl('', [Validators.required]);
   @Input() groups: TodoGroup[] = [{ id:0, name:'Todos', slug:'todos', todos:[new Todo()] },{ id:0, name:'g1', slug:'g1', todos:[new Todo()] }, { id:0, name:'g2', slug:'g2', todos:[new Todo(), new Todo()] }];
   todos : TodoGroup | undefined = this.groups.find(x => x.slug = 'todos');
   @Output() changeGroup : EventEmitter<TodoGroup>;
   loading = false;
-  @ViewChild('newGroupName') newGroupName : ElementRef;
+
+  constructor(private readonly _httpClient: HttpClient,
+    private readonly _alertService : AlertService,
+    private readonly _authService : AuthService,
+    private readonly _router : Router) {
+      this. form = new FormGroup({
+        name: this.nameControl
+      });
+     }
+
+  ngOnInit(): void {
+  }
 
   createGroup(){
-    let name = this.newGroupName.nativeElement.value;
-    if(name == '' || name == undefined) return;
+    if(this.nameControl.value == '' || this.nameControl.value == undefined) return;
     this.loading  = true
-    this._httpClient.post<TodoGroup>('todo-group', name).subscribe({
+    this._httpClient.post<TodoGroup>('todo-group', {name: this.nameControl.value}).subscribe({
       next: res => {
         this.loading  = false;
         this.emitChangeGroup(res);

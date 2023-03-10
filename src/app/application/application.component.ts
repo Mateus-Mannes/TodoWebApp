@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { TodoGroup } from '../shared/entities/todo-group';
+import { AlertService } from '../shared/services/alert-service';
 
 @Component({
   selector: 'app-application',
@@ -7,7 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicationComponent implements OnInit {
 
-  constructor() { }
+  groups: TodoGroup[];
+
+  constructor(private readonly _httpClient: HttpClient,
+    private readonly _alertService: AlertService) {
+    _httpClient.get<TodoGroup[]>('todo-group').subscribe({
+      next: res => { this.groups = res;},
+      error: value => {_alertService.alert(`Error on loading todos - ${value.message}`, 'danger')}
+    });
+  }
 
   ngOnInit(): void {
   }
