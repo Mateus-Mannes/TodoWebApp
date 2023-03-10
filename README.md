@@ -22,19 +22,17 @@ flowchart TB
 
   subgraph Application Page
     
-    subgraph ApplicationModel
-      ApplicationComponent
-    end
+    ApplicationComponent
     
-    subgraph GroupsModel
+    subgraph GroupsModule
       GroupsComponent[GroupsComponent \n - Groups CRUD]
     end
 
-    ApplicationModel -- Fills groups --> GroupsModel
+    ApplicationComponent -- Fills groups --> GroupsModule
 
-    GroupsModel -- Emits group change --> ApplicationModel
+    GroupsModule -- Emits group change --> ApplicationComponent
 
-    subgraph GridModel
+    subgraph GridModule
       GridComponent[GridComponent \n - Todos CRUD]
       -- 1 - * -->
       TodoComponent
@@ -42,13 +40,13 @@ flowchart TB
       TodoComponent -- pop up -->EditTodoComponent
     end
 
-    ApplicationModel -- Fills the grid --> GridModel
+    ApplicationComponent -- Fills the grid --> GridModule
 
-    subgraph InputModel
-      InputComponent[InputComponent \n emits todo creation]
+    subgraph InputModule
+      InputComponent[InputComponent \n -emits todo creation]
     end
 
-    InputModel -- Adds todos --> GridModel
+    InputModule -- Adds todos --> GridModule
 
   end
 ```
