@@ -32,7 +32,7 @@ namespace TodoApp.Controllers
 
             var count = await _todoRepository.GetQueryable().AsNoTracking()
                 .Where(x => x.TodoGroupId == input.TodoGroupId).CountAsync();
-            if (count >= 20) return BadRequest("Todos limit reached");
+            if (count >= 30) return BadRequest("Todos limit reached");
 
             Todo todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
             var created = await _todoRepository.InsertAsync(todo);
