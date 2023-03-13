@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert-service';
 import { AuthService } from 'src/app/shared/services/auth-service';
@@ -12,12 +12,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.css']
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent implements OnInit, AfterViewInit {
 
   form: FormGroup;
   nameControl = new FormControl('', [Validators.required]);
-  @Input() groups: TodoGroup[] = [{ id:0, name:'Todos', slug:'todos', todos:[new Todo()] },{ id:0, name:'g1', slug:'g1', todos:[new Todo()] }, { id:0, name:'g2', slug:'g2', todos:[new Todo(), new Todo()] }];
-  todos : TodoGroup | undefined = this.groups.find(x => x.slug = 'todos');
+  @Input() groups: TodoGroup[];
+  todos : TodoGroup;
+  selectedGroup : TodoGroup;
   @Output() changeGroup : EventEmitter<TodoGroup>;
   loading = false;
 
@@ -31,12 +32,19 @@ export class GroupsComponent implements OnInit {
      }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+    // ???????????????????
+    this.todos = this.groups.filter(x => x.slug = 'todos')[0];
+      this.selectedGroup = this.todos;
   }
 
   createGroup(){
     if(this.nameControl.value == '' || this.nameControl.value == undefined) return;
     this.loading  = true
-    this._httpClient.post<TodoGroup>('todo-group', {name: this.nameControl.value}).subscribe({
+    this._httpClient.post<TodoGroup>(`todo-group/${this.nameControl.value}`, null).subscribe({
       next: res => {
         this.loading  = false;
         this.emitChangeGroup(res);
@@ -78,6 +86,10 @@ export class GroupsComponent implements OnInit {
   logout(){
     this._authService.logout();
     this._router.navigateByUrl('/login');
+  }
+
+  closeNavBar(){
+    document.getElementById('closeNavBar')?.click();
   }
 
 }
