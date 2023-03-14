@@ -10,13 +10,16 @@ import { AlertService } from '../shared/services/alert-service';
 })
 export class ApplicationComponent implements OnInit {
 
+  loading = true;
   groups: TodoGroup[];
+
 
   constructor(private readonly _httpClient: HttpClient,
     private readonly _alertService: AlertService) {
     _httpClient.get<TodoGroup[]>('todo-group').subscribe({
-      next: res => { this.groups = res;},
-      error: value => {_alertService.alert(`Error on loading todos - ${value.message}`, 'danger')}
+      next: res => { this.groups = res; this.loading = false},
+      error: value => {_alertService.alert(`Error on loading todos - ${value.message}`, 'danger');
+      this.loading = false}
     });
   }
 

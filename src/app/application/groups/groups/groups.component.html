@@ -1,10 +1,12 @@
 <nav class="navbar bg-body-tertiary sticky-top shadow-sm" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Todo App</a>
-    <p class="navbar-brand">{{ selectedGroup?.name }}</p>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="d-flex">
+      <p align="left" style="margin-right: 1em;" *ngIf="selectedGroup" class="navbar-brand">{{ selectedGroup.name }}</p>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Todo App</h5>
@@ -15,13 +17,13 @@
           <h2 class="fs-6">Todo Lists:</h2>
           <li class="nav-item">
             <div class="d-flex justify-content-between">
-              <a (click)="emitChangeGroup(todos)" [id]="'gp'+todos?.id" class="nav-link active" aria-current="page">Todos</a>
+              <a (click)="emitChangeGroup(todos)" [id]="'gp'+todos?.id" class="nav-link active" aria-current="page" href="#" onclick="event.preventDefault();">Todos</a>
             </div>
           </li>
 
           <li class="nav-item" *ngFor="let g of groups">
             <div *ngIf="g.name != 'Todos'" class="d-flex justify-content-between">
-              <a (click)="emitChangeGroup(g)" [id]="'gp'+g.id" class="nav-link" href="#">{{ g.name }}</a>
+              <a (click)="emitChangeGroup(g)" [id]="'gp'+g.id" class="nav-link" href="#" onclick="event.preventDefault();">{{ g.name }}</a>
               <li class="btn-group dropstart">
                 <button style="max-height: 2em;position: relative;top: 0.5em;"
                 class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -12,14 +12,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.css']
 })
-export class GroupsComponent implements OnInit, AfterViewInit {
+export class GroupsComponent implements OnInit {
 
   form: FormGroup;
   nameControl = new FormControl('', [Validators.required]);
-  @Input() groups: TodoGroup[];
+  @Input() groups: TodoGroup[] = [];
   todos : TodoGroup;
   selectedGroup : TodoGroup;
-  @Output() changeGroup : EventEmitter<TodoGroup>;
+  @Output() changeGroup : EventEmitter<TodoGroup> = new EventEmitter<TodoGroup>();
   loading = false;
 
   constructor(private readonly _httpClient: HttpClient,
@@ -32,13 +32,8 @@ export class GroupsComponent implements OnInit, AfterViewInit {
      }
 
   ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit(): void {
-    // ???????????????????
     this.todos = this.groups.filter(x => x.slug = 'todos')[0];
-      this.selectedGroup = this.todos;
+    this.selectedGroup = this.todos;
   }
 
   createGroup(){
@@ -72,8 +67,11 @@ export class GroupsComponent implements OnInit, AfterViewInit {
     this.groups.splice(index, 1);
   }
 
-  emitChangeGroup(group: TodoGroup | undefined){
+  emitChangeGroup(group: TodoGroup){
+    this.selectedGroup = group;
     this.changeGroup.emit(group);
+    this.activeGroup(group);
+    this.closeNavBar();
   }
 
   activeGroup(group: TodoGroup){
