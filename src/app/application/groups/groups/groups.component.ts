@@ -19,7 +19,6 @@ export class GroupsComponent implements OnInit {
   @Input() groups: TodoGroup[] = [];
   todos : TodoGroup;
   selectedGroup : TodoGroup;
-  @Output() changeGroup : EventEmitter<TodoGroup> = new EventEmitter<TodoGroup>();
   loading = false;
 
   constructor(private readonly _httpClient: HttpClient,
@@ -69,7 +68,6 @@ export class GroupsComponent implements OnInit {
 
   emitChangeGroup(group: TodoGroup){
     this.selectedGroup = group;
-    this.changeGroup.emit(group);
     this.activeGroup(group);
     this.closeNavBar();
   }

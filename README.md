@@ -30,8 +30,6 @@ flowchart TB
 
     ApplicationComponent -- Fills groups --> GroupsModule
 
-    GroupsModule -- Emits group change --> ApplicationComponent
-
     subgraph GridModule
       GridComponent[GridComponent \n - Todos CRUD]
       -- 1 - * -->
@@ -40,13 +38,13 @@ flowchart TB
       TodoComponent -- pop up -->EditTodoComponent
     end
 
-    ApplicationComponent -- Fills the grid --> GridModule
+    GroupsModule -- Selected group \nfills the grid --> GridModule
 
     subgraph InputModule
-      InputComponent[InputComponent \n -emits todo creation]
+      InputComponent[InputComponent]
     end
 
-    InputModule -- Adds todos --> GridModule
+    InputModule -- emits todo creation --> GridModule
 
   end
 ```
