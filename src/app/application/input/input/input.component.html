@@ -1,8 +1,8 @@
-<form class="input-form d-flex" (ngSubmit)="emitTodoCreation()">
+<form [formGroup]="form" class="input-form d-flex" (ngSubmit)="emitTodoCreation()">
       <button type="submit" class="input-form__button btn btn-outline-secondary d-flex align-items-center justify-content-center shadow-sm">
         <mat-icon>add</mat-icon>
       </button>
-      <input autofocus #todoDescription type="text" class="input-form__text form-control shadow-sm border-secondary" placeholder="New Todo ..." aria-label="Todo">
+      <input formControlName="todo" autofocus #todoDescription type="text" class="input-form__text form-control shadow-sm border-secondary" placeholder="New Todo ..." aria-label="Todo">
       <mat-form-field class="example-full-width" style="width: 0px; height: 0px;">
         <input matInput [matDatepicker]="picker" placeholder="Choose a date">
         <mat-datepicker touchUi="true" #picker>

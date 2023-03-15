@@ -1,5 +1,7 @@
+import { GridComponent } from './grid/grid/grid.component';
+import { GroupsComponent } from './groups/groups/groups.component';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TodoGroup } from '../shared/entities/todo-group';
 import { AlertService } from '../shared/services/alert-service';
 
@@ -12,7 +14,6 @@ export class ApplicationComponent implements OnInit {
 
   loading = true;
   groups: TodoGroup[];
-
 
   constructor(private readonly _httpClient: HttpClient,
     private readonly _alertService: AlertService) {

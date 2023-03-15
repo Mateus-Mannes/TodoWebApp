@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from 'src/app/shared/services/alert-service';
 import { Todo } from 'src/app/shared/entities/todo';
 import { EditTodoComponent } from '../edit-todo/edit-todo.component';
+import { TodoGroup } from 'src/app/shared/entities/todo-group';
 
 @Component({
   selector: 'app-grid',
@@ -12,16 +13,23 @@ import { EditTodoComponent } from '../edit-todo/edit-todo.component';
 })
 export class GridComponent implements OnInit {
 
+  @Input() todoGroup: TodoGroup;
+  protected todos: Todo[];
+
   constructor(private readonly _httpClient: HttpClient,
     private readonly _alertService : AlertService,
     private readonly _matDialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.todos = this.todoGroup.todos;
   }
 
-  @Input() todos: Todo[] = [{description: 'teste', id: 0, deadLine: new Date(), todoGroupId: 0, createdAt: new Date(), userId: 0}];
+  ngOnChanges(){
+    this.todos = this.todoGroup.todos;
+  }
 
   createTodo(todo: Todo) {
+    todo.todoGroupId = this.todoGroup.id;
     this.todos.push(todo);
     this._httpClient.post<Todo>('todo', todo).subscribe({
       next: res => {},

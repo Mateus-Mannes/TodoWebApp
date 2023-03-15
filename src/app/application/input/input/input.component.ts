@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Todo } from 'src/app/shared/entities/todo';
 
@@ -12,8 +13,14 @@ export class InputComponent implements OnInit {
   @ViewChild('picker') datepicker: MatDatepicker<Date | null>;
   @ViewChild('todoDescription') todoDescription: ElementRef;
   @Output() createTodo : EventEmitter<Todo> = new EventEmitter<Todo>();
+  form: FormGroup;
+  todoControl = new FormControl('', [Validators.required]);
 
-  constructor() { }
+  constructor() {
+    this. form = new FormGroup({
+      todo: this.todoControl
+    });
+   }
 
   ngOnInit(): void {
   }
