@@ -31,6 +31,8 @@ export class EditTodoComponent implements OnInit, AfterViewInit {
   }
 
   save() {
+    this._data.description = this.form.get('description')?.value;
+    this._data.deadLine = this.form.get('deadLine')?.value;
     this._matDialogRef.close(this._data)
   }
 

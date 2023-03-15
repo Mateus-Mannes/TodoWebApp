@@ -2,11 +2,11 @@
   <form [formGroup]="form" (ngSubmit)="save()">
       <div class="mb-3">
         <label for="todo" class="form-label">Todo</label>
-        <input matInput type="text" class="form-control" id="todo" formControlName="description">
+        <input type="text" class="form-control" id="todo" formControlName="description">
       </div>
       <div class="mb-3">
         <label for="deadline" class="form-label">Dead Line</label>
-        <input matInput type="date" class="form-control" #deadline formControlName="deadLine">
+        <input type="date" class="form-control" #deadline formControlName="deadLine">
       </div>
       <div class="d-flex flex-row-reverse">
           <button (click)="close()" style="margin-left: 1em;" type="button" class="btn btn-light">Cancel</button>
