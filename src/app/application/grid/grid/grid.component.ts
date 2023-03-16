@@ -32,7 +32,7 @@ export class GridComponent implements OnInit {
     todo.todoGroupId = this.todoGroup.id;
     this.todos.push(todo);
     this._httpClient.post<Todo>('todo', todo).subscribe({
-      next: res => {},
+      next: res => {todo.id = res.id},
       error: value => {
         this._alertService.alert('Error on adding todo - '+value.message, 'danger');
         this.removeTodoFromGrid(todo);

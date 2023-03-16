@@ -40,8 +40,10 @@ export class GroupsComponent implements OnInit {
     this.loading  = true
     this._httpClient.post<TodoGroup>(`todo-group/${this.nameControl.value}`, null).subscribe({
       next: res => {
+        this.groups.push(res);
+        this.nameControl.setValue('');
         this.loading  = false;
-        this.emitChangeGroup(res);
+        this.changeGroup(res);
       },
       error: value => {
         this._alertService.alert('Error on adding list - '+value.message, 'danger');
@@ -62,21 +64,16 @@ export class GroupsComponent implements OnInit {
   }
 
   removeList(group: TodoGroup){
+    if(group.id == this.selectedGroup.id){
+      this.selectedGroup = this.todos;
+    }
     let index = this.groups.indexOf(group);
     this.groups.splice(index, 1);
   }
 
-  emitChangeGroup(group: TodoGroup){
+  changeGroup(group: TodoGroup){
     this.selectedGroup = group;
-    this.activeGroup(group);
     this.closeNavBar();
-  }
-
-  activeGroup(group: TodoGroup){
-    let old = (document.querySelector('.active') as HTMLImageElement);
-    old.className = 'nav-link';
-    let newGp = (document.getElementById('gp'+group?.id) as HTMLImageElement);
-    newGp.className = 'nav-link active';
   }
 
   logout(){

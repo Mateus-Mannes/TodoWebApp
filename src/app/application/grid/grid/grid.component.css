@@ -1,0 +1,13 @@
+
+.grid {
+    max-height: calc( 100vh - (38px + 80px + 1.5em + 1em ));
+}
+
+.grid {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.grid::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
