@@ -7,7 +7,7 @@
         public string Slug { get; set; }
         public int UserId { get; set; }
 
-        public List<Todo> Todos { get; set; } 
+        public List<Todo> Todos { get; set; } = new List<Todo>();
         public User User { get; set; }
 
         public TodoGroup(string name, int userId)
