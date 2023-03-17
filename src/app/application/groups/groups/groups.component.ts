@@ -46,7 +46,8 @@ export class GroupsComponent implements OnInit {
         this.changeGroup(res);
       },
       error: value => {
-        this._alertService.alert('Error on adding list - '+value.message, 'danger');
+        this._alertService.alert('Error on adding list - '+value.error, 'danger');
+        this.closeNavBar();
         this.loading  = false;
       }
     });
@@ -57,8 +58,9 @@ export class GroupsComponent implements OnInit {
     this._httpClient.delete<TodoGroup>(`todo-group/${group.id}`).subscribe({
       next: res => {},
       error: value => {
-        this._alertService.alert('Error on deleting list - '+value.message, 'danger');
+        this._alertService.alert('Error on deleting list - '+value.error, 'danger');
         this.groups.push(group);
+        this.closeNavBar();
       }
     });
   }

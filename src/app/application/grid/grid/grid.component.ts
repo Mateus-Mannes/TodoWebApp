@@ -34,7 +34,7 @@ export class GridComponent implements OnInit {
     this._httpClient.post<Todo>('todo', todo).subscribe({
       next: res => {todo.id = res.id},
       error: value => {
-        this._alertService.alert('Error on adding todo - '+value.message, 'danger');
+        this._alertService.alert('Error on adding todo - '+value.error, 'danger');
         this.removeTodoFromGrid(todo);
       }
     });
@@ -50,7 +50,7 @@ export class GridComponent implements OnInit {
     this._httpClient.delete(`todo/${todo.id}`).subscribe({
       next: () => {},
       error: value => {
-        this._alertService.alert('Error on completing todo - '+value.message, 'danger');
+        this._alertService.alert('Error on completing todo - '+value.error, 'danger');
         this.todos.push(todo);
       }
     });
@@ -67,7 +67,7 @@ export class GridComponent implements OnInit {
         this._httpClient.put(`todo`, todoUpdate).subscribe({
           next: () => {},
           error: value => {
-            this._alertService.alert('Error on updating todo - '+ value.message, 'danger');
+            this._alertService.alert('Error on updating todo - '+ value.error, 'danger');
             this.todos[index].description = todo.description;
             this.todos[index].deadLine = todo.deadLine;
           }

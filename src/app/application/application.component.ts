@@ -19,7 +19,7 @@ export class ApplicationComponent implements OnInit {
     private readonly _alertService: AlertService) {
     _httpClient.get<TodoGroup[]>('todo-group').subscribe({
       next: res => { this.groups = res; this.loading = false},
-      error: value => {_alertService.alert(`Error on loading todos - ${value.message}`, 'danger');
+      error: value => {_alertService.alert(`Error on loading todos - ${value.error}`, 'danger');
       this.loading = false}
     });
   }

@@ -6,8 +6,6 @@ import { Injectable, ViewChild } from "@angular/core";
 @Injectable()
 export class AlertService  {
 
-  @ViewChild(GroupsComponent) groups : GroupsComponent;
-
   notifyErros(error: HttpErrorResponse){
     if(Array.isArray(error.error)){
       error.error.forEach(x => this.alert(x, 'danger'));
@@ -20,7 +18,6 @@ export class AlertService  {
   alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
   alert(message: string, type: string){
-    this.groups?.closeNavBar();
     const wrapper = document.createElement('div')
     wrapper.innerHTML = [
       `<div id='alertNotification' class="alert alert-${type} alert-dismissible" role="alert">`,

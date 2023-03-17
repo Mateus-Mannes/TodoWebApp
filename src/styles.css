@@ -11,7 +11,7 @@ app-root, app-login, .full {
 }
 
 .notifications {
-  margin-top: 2rem;
+  margin-top: 60px;
   position: absolute;
   width: 100vw;
 }
