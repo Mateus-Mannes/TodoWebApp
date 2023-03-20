@@ -5,11 +5,13 @@ import { AlertService } from 'src/app/shared/services/alert-service';
 import { Todo } from 'src/app/shared/entities/todo';
 import { EditTodoComponent } from '../edit-todo/edit-todo.component';
 import { TodoGroup } from 'src/app/shared/entities/todo-group';
+import { FadeInOut } from 'src/app/shared/services/animation';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  styleUrls: ['./grid.component.css'],
+  animations: [FadeInOut(300, 200, true)]
 })
 export class GridComponent implements OnInit {
 

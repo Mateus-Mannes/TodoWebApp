@@ -3,14 +3,15 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, 
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert-service';
 import { AuthService } from 'src/app/shared/services/auth-service';
-import { Todo } from 'src/app/shared/entities/todo';
 import { TodoGroup } from 'src/app/shared/entities/todo-group';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FadeInOut } from 'src/app/shared/services/animation';
 
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.css']
+  styleUrls: ['./groups.component.css'],
+  animations: [FadeInOut(300, 200, true)]
 })
 export class GroupsComponent implements OnInit {
 

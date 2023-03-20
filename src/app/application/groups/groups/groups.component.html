@@ -23,7 +23,7 @@
             </div>
           </li>
 
-          <li class="nav-item" *ngFor="let g of groups">
+          <li [@fadeInOut] class="nav-item" *ngFor="let g of groups">
             <div *ngIf="g.name != 'Todos'" class="d-flex justify-content-between">
               <a (click)="changeGroup(g)" [id]="'gp'+g.id" class="nav-link"
               [ngClass]="{'active': g.id === selectedGroup.id}"
