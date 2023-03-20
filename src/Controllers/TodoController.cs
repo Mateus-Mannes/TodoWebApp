@@ -40,11 +40,12 @@ namespace TodoApp.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] TodoUpdateViewModel input)
+        [Route("{id:int}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute]int id,[FromBody] TodoUpdateViewModel input)
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 
-            var todo = await _todoRepository.GetQueryable().FirstOrDefaultAsync(x => x.Id == input.Id);
+            var todo = await _todoRepository.GetQueryable().FirstOrDefaultAsync(x => x.Id == id);
             if (todo == null) return NotFound("Todo not found");
 
             todo.Description = input.Description;
