@@ -36,8 +36,8 @@ public class TodoAppTests : TodoAppTestBase
     {
         var result = (await _todoController.CreateAsync(new TodoCreateViewModel { Description = "test", TodoGroupId = 1 })) as OkObjectResult;
         var todo = result.Value as Todo;
-        await _todoController.UpdateAsync(new TodoUpdateViewModel()
-            { Id = todo.Id, Description = "updated", DeadLine = DateTime.Now });
+        await _todoController.UpdateAsync(todo.Id ,new TodoUpdateViewModel()
+            { Description = "updated", DeadLine = DateTime.Now });
         Assert.IsTrue(_todoRepository.GetQueryable().Where(x => x.Description == "updated").Count() == 1);
     }
 
