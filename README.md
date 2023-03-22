@@ -8,6 +8,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
+the  application is using the API at https://github.com/Mateus-Mannes/TodoWebApp for the back-end. You can run it locally also.
+
 ## Project Structure
 
 ``` mermaid
