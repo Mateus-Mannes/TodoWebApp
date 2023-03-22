@@ -32,7 +32,7 @@ namespace TodoApp.Controllers
 
             var count = await _todoRepository.GetQueryable().AsNoTracking()
                 .Where(x => x.TodoGroupId == input.TodoGroupId).CountAsync();
-            if (count >= 20) return BadRequest("Todos limit reached");
+            if (count >= 30) return BadRequest("Todos limit reached");
 
             Todo todo = _mapper.Map<TodoCreateViewModel, Todo>(input);
             var created = await _todoRepository.InsertAsync(todo);
@@ -40,11 +40,12 @@ namespace TodoApp.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] TodoUpdateViewModel input)
+        [Route("{id:int}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute]int id,[FromBody] TodoUpdateViewModel input)
         {
             if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 
-            var todo = await _todoRepository.GetQueryable().FirstOrDefaultAsync(x => x.Id == input.Id);
+            var todo = await _todoRepository.GetQueryable().FirstOrDefaultAsync(x => x.Id == id);
             if (todo == null) return NotFound("Todo not found");
 
             todo.Description = input.Description;
