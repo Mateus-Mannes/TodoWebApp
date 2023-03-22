@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { GridComponent } from './grid/grid/grid.component';
 import { GroupsComponent } from './groups/groups/groups.component';
 import { HttpClient } from '@angular/common/http';
@@ -16,10 +17,14 @@ export class ApplicationComponent implements OnInit {
   groups: TodoGroup[];
 
   constructor(private readonly _httpClient: HttpClient,
-    private readonly _alertService: AlertService) {
+    private readonly _alertService: AlertService,
+    private  readonly _router : Router) {
     _httpClient.get<TodoGroup[]>('todo-group').subscribe({
       next: res => { this.groups = res; this.loading = false},
-      error: value => {_alertService.alert(`Error on loading todos - ${value.error}`, 'danger');
+      error: value => {
+        if(this._router.url != '/login')
+          _alertService.alert(`Error on loading todos - ${value.error}`, 'danger'
+      );
       this.loading = false}
     });
   }

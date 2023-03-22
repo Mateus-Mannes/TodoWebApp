@@ -66,7 +66,7 @@ export class GridComponent implements OnInit {
         this.todos[index].description = todoUpdate?.description;
         this.todos[index].deadLine = todoUpdate?.deadLine;
 
-        this._httpClient.put(`todo`, todoUpdate).subscribe({
+        this._httpClient.put(`todo/${todo.id}`, todoUpdate).subscribe({
           next: () => {},
           error: value => {
             this._alertService.alert('Error on updating todo - '+ value.error, 'danger');
