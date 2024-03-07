@@ -1,18 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+﻿using System.Reflection;
 using TodoApp.Data;
 
-namespace TodoApp.Extensions
+namespace TodoApp.Extensions;
+
+public static class DbContextExtensions
 {
-    public static class DbContextExtensions
+    public static List<PropertyInfo> GetDbSets()
     {
-        public static List<PropertyInfo> GetDbSets()
-        {
-            return typeof(TodoAppDbContext).GetProperties()
-                .Where(x =>
-                x.PropertyType.IsGenericType 
-                && x.PropertyType.Name.StartsWith("DbSet"))
-                .ToList();
-        }
+        return typeof(TodoAppDbContext).GetProperties()
+            .Where(x =>
+            x.PropertyType.IsGenericType 
+            && x.PropertyType.Name.StartsWith("DbSet"))
+            .ToList();
     }
 }

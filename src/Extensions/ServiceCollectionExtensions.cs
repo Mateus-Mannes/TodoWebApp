@@ -1,50 +1,38 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using TodoApp.Data;
 using TodoApp.Repositories;
 
-namespace TodoApp.Extensions
+namespace TodoApp.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static void AddRepositories(this IServiceCollection services, TodoAppDbContext context = null)
     {
-        public static void AddRepositories(this IServiceCollection services, TodoAppDbContext context = null)
+        var dbSets = DbContextExtensions.GetDbSets();
+        foreach (var dbSet in dbSets)
         {
-            var dbSets = DbContextExtensions.GetDbSets();
-            foreach (var dbSet in dbSets)
+            var setType = dbSet.PropertyType.GenericTypeArguments[0];
+
+            var repositoryInterface = typeof(IRepository<>).MakeGenericType(setType);
+            var repositoryImplementation = typeof(Repository<>).MakeGenericType(setType);
+
+            if(context != null)
             {
-                var setType = dbSet.PropertyType.GenericTypeArguments[0];
-
-                var repositoryInterface = typeof(IRepository<>).MakeGenericType(setType);
-                var repositoryImplementation = typeof(Repository<>).MakeGenericType(setType);
-
-                if(context != null)
-                {
-                    var constructor = repositoryImplementation.GetConstructors()[0];
-                    services.AddTransient(repositoryInterface, x => constructor.Invoke(new object[] { context }));
-                }
-                else
-                {
-                    services.AddTransient(repositoryInterface, repositoryImplementation);
-                }
+                var constructor = repositoryImplementation.GetConstructors()[0];
+                services.AddTransient(repositoryInterface, x => constructor.Invoke(new object[] { context }));
+            }
+            else
+            {
+                services.AddTransient(repositoryInterface, repositoryImplementation);
             }
         }
+    }
 
-        public static void AddMapper(this IServiceCollection services)
-        {
-            var mapperCfg = new MapperConfiguration(cfg => { cfg.AddProfile<TodoAppAutoMapperProfile>(); });
-            var mapper = mapperCfg.CreateMapper();
-            services.AddSingleton<IMapper>(mapper);
-        }
-
-        public static void AddDbContext(this IServiceCollection services)
-        {
-            services.AddTransient<ITodoAppDbContextFactory, TodoAppDbContextFactory>();
-            services.AddScoped(provider =>
-            {
-                var factory = provider.GetRequiredService<ITodoAppDbContextFactory>();
-                return factory.CreateContext();
-            });
-        }
+    public static void AddMapper(this IServiceCollection services)
+    {
+        var mapperCfg = new MapperConfiguration(cfg => { cfg.AddProfile<TodoAppAutoMapperProfile>(); });
+        var mapper = mapperCfg.CreateMapper();
+        services.AddSingleton<IMapper>(mapper);
     }
 }

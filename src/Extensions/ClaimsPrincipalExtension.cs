@@ -1,20 +1,20 @@
 ﻿using System.Security.Claims;
 
-namespace TodoApp.Extensions
+namespace TodoApp.Extensions;
+
+public static class ClaimsPrincipalExtension
 {
-    public static class ClaimsPrincipalExtension
+    public static int UserId(this ClaimsPrincipal claims)
     {
-        public static int UserId(this ClaimsPrincipal claims)
+        try
         {
-            try
-            {
-                var value = claims?.FindFirst("UserId")?.Value;
-                return int.Parse(value);
-            }
-            catch
-            {
-                return 0;
-            }
+            var value = claims?.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(value)) throw new Exception("UserId claim not found");
+            return int.Parse(value);
+        }
+        catch
+        {
+            return 0;
         }
     }
 }

@@ -6,6 +6,8 @@ using TodoApp.Services;
 using Microsoft.AspNetCore.ResponseCompression;
 using TodoApp.Extensions;
 using TodoApp.Options;
+using TodoApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureAuthentication();
@@ -81,7 +83,11 @@ void ConfigureOptions()
 void ConfigureServices()
 {
     builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-    builder.Services.AddDbContext();
+    builder.Services.AddDbContext<TodoAppDbContext>(options => {
+        options.UseSqlite("Data Source=app.db")
+            .EnableSensitiveDataLogging()
+            .LogTo(Console.WriteLine);
+    });
     builder.Services.AddRepositories();
     builder.Services.AddMapper();
     builder.Services.AddTransient<TokenService>();

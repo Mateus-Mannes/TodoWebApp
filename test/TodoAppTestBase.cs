@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,7 +61,7 @@ namespace TodoApp.Tests
         {
             var dbContext = new TodoAppDbContext(new DbContextOptionsBuilder<TodoAppDbContext>()
                 .UseSqlite(this.connection)
-                .Options, User.Id );
+                .Options, HttpContextAccessor );
             dbContext.Database.EnsureCreated();
             dbContext.SeedTests(User);
             Services.AddRepositories(dbContext);
@@ -74,8 +75,8 @@ namespace TodoApp.Tests
 
         private void ConfigureControllers()
         {
-            var controllers = typeof(Controller).Assembly.GetTypes()
-                .Where(x => x.IsSubclassOf(typeof(Controller)));
+            var controllers = typeof(ControllerBase).Assembly.GetTypes()
+                .Where(x => x.IsSubclassOf(typeof(ControllerBase)));
             var construtors = controllers.Select(x => x.GetConstructors()[0]);
             foreach(var constructor in construtors)
             {
