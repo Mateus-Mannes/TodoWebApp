@@ -7,7 +7,7 @@ namespace TodoApp.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddRepositories(this IServiceCollection services, TodoAppDbContext context = null)
+    public static void AddRepositories(this IServiceCollection services, TodoAppDbContext? context = null)
     {
         var dbSets = DbContextExtensions.GetDbSets();
         foreach (var dbSet in dbSets)

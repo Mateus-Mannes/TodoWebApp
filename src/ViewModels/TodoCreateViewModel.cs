@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TodoApp.ViewModels
+namespace TodoApp.ViewModels;
+
+public record TodoCreateViewModel
 {
-    public class TodoCreateViewModel
-    {
-        [Required]
-        public string Description { get; set; }
-        public DateTime? DeadLine { get; set; }
-        [Required]
-        public int TodoGroupId { get; set; }
-    }
+    [Required]
+    public required string Description { get; init; }
+    public DateTime? DeadLine { get; init; }
+    [Required]
+    public required int TodoGroupId { get; init; }
 }
+

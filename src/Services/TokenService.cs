@@ -36,6 +36,6 @@ public class TokenService
 
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        return new TokenViewModel() { Token = tokenHandler.WriteToken(token), ExpiresAt = tokenDescriptor.Expires };
+        return new TokenViewModel(tokenHandler.WriteToken(token), tokenDescriptor.Expires);
     }
 }

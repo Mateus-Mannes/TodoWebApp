@@ -20,7 +20,7 @@ namespace TodoApp.Repositories
         {
             return await table.ToListAsync();
         }
-        public async Task<T> GetByIdAsync(object id)
+        public async Task<T?> GetByIdAsync(object id)
         {
             return await table.FindAsync(id);
         }
@@ -37,8 +37,8 @@ namespace TodoApp.Repositories
         }
         public async Task DeleteAsync(int id)
         {
-            T existing = await table.FindAsync(id);
-            table.Remove(existing);
+            var existing = await table.FindAsync(id);
+            if(existing is not null) table.Remove(existing);
             await _context.SaveChangesAsync();
         }
     }

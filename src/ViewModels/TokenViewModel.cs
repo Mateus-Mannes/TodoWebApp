@@ -1,8 +1,2 @@
-﻿namespace TodoApp.ViewModels
-{
-    public class TokenViewModel
-    {
-        public string? Token { get; set; }
-        public DateTime? ExpiresAt { get; set; }
-    }
-}
+﻿namespace TodoApp.ViewModels;
+public record TokenViewModel(string? Token, DateTime? ExpiresAt);
