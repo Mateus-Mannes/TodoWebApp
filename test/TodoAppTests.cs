@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
 using TodoApp.Controllers;
 using TodoApp.Domain;
 using TodoApp.Repositories;
@@ -35,9 +34,10 @@ public class TodoAppTests : TodoAppTestBase
     public async Task Should_Update_Todo()
     {
         var result = (await _todoController.CreateAsync(new TodoCreateViewModel { Description = "test", TodoGroupId = 1 })) as OkObjectResult;
-        var todo = result.Value as Todo;
-        await _todoController.UpdateAsync(todo.Id ,new TodoUpdateViewModel()
-            { Description = "updated", DeadLine = DateTime.Now });
+        var todo = result?.Value as Todo;
+        Assert.IsNotNull(todo);
+        await _todoController.UpdateAsync(todo.Id, new TodoUpdateViewModel()
+        { Description = "updated", DeadLine = DateTime.Now });
         Assert.IsTrue(_todoRepository.GetQueryable().Where(x => x.Description == "updated").Count() == 1);
     }
 
@@ -45,7 +45,8 @@ public class TodoAppTests : TodoAppTestBase
     public async Task Should_Delete_Todo()
     {
         var result = (await _todoController.CreateAsync(new TodoCreateViewModel { Description = "test", TodoGroupId = 1 })) as OkObjectResult;
-        var todo = result.Value as Todo;
+        var todo = result?.Value as Todo;
+        Assert.IsNotNull(todo);
         await _todoController.DeleteAsync(todo.Id);
         Assert.IsTrue(_todoRepository.GetQueryable().Where(x => x.Description == "test").Count() == 0);
     }
@@ -53,11 +54,16 @@ public class TodoAppTests : TodoAppTestBase
     [TestMethod]
     public async Task Should_Get_Groups_And_Todos()
     {
-        await _todoGroupRepository.InsertAsync(new TodoGroup() { Name = "New Group", Slug = "ng", User = User, 
-            Todos = new List<Todo>() { new Todo() { Description = "1" }, new Todo() { Description = "2" } }
+        await _todoGroupRepository.InsertAsync(new TodoGroup()
+        {
+            Name = "New Group",
+            Slug = "ng",
+            User = User,
+            Todos = new List<Todo>() { new Todo() { Description = "1", TodoGroupId = 0 }, new Todo() { Description = "2", TodoGroupId = 0 } }
         });
         var result = await _todoGroupController.GetListAsync();
-        var groups = (result as OkObjectResult).Value as IEnumerable<TodoGroup>;
+        var groups = (result as OkObjectResult)?.Value as IEnumerable<TodoGroup>;
+        Assert.IsNotNull(groups);
         Assert.IsTrue(groups.Where(x => x.Name == "New Group").Count() == 1);
         Assert.IsTrue(groups.First(x => x.Name == "New Group").Todos.Count() == 2);
         Assert.IsTrue(groups.Where(x => x.Name == "Todos").Count() == 1);
@@ -87,7 +93,7 @@ public class TodoAppTests : TodoAppTestBase
             Name = "New Group",
             Slug = "ng",
             User = User,
-            Todos = new List<Todo>() { new Todo() { Description = "1" }, new Todo() { Description = "2" } }
+            Todos = new List<Todo>() { new Todo() { Description = "1", TodoGroupId = 0 }, new Todo() { Description = "2", TodoGroupId = 0 } }
         });
         await _todoGroupController.DeleteAsync(group.Id);
         Assert.IsTrue(_todoGroupRepository.GetQueryable().Where(x => x.Name == "New Group").Count() == 0);

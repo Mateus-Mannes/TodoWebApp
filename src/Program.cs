@@ -1,27 +1,24 @@
-using TodoApp.Data;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using TodoApp;
 using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TodoApp.Services;
 using Microsoft.AspNetCore.ResponseCompression;
-using TodoApp.Repositories;
-using TodoApp.Domain;
 using TodoApp.Extensions;
+using TodoApp.Options;
+using TodoApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigureAuthentication(builder);
-ConfigureMvc(builder);
-ConfigureServices(builder);
+ConfigureAuthentication();
+ConfigureMvc();
+ConfigureOptions();
+ConfigureServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-LoadConfiguration(app);
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
@@ -37,11 +34,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.Run();
 
-void ConfigureAuthentication(WebApplicationBuilder builder)
+void ConfigureAuthentication()
 {
-    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("JwtKey"));
+    var options = new JwtOptions();
+    builder.Configuration.GetSection(JwtOptions.Section).Bind(options);
+    var key = Encoding.ASCII.GetBytes(options.JwtKey ?? "");
     builder.Services.AddAuthentication(x =>
     {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -58,7 +58,7 @@ void ConfigureAuthentication(WebApplicationBuilder builder)
     });
 }
 
-void ConfigureMvc(WebApplicationBuilder builder)
+void ConfigureMvc()
 {
     builder.Services.AddControllers()
     .AddJsonOptions(x => { x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; })
@@ -68,21 +68,27 @@ void ConfigureMvc(WebApplicationBuilder builder)
     {
         options.Providers.Add<GzipCompressionProvider>();
     });
+
     builder.Services.Configure<GzipCompressionProviderOptions>(options =>
     {
         options.Level = System.IO.Compression.CompressionLevel.Optimal;
     });
 }
 
-void LoadConfiguration(WebApplication app)
+void ConfigureOptions()
 {
-    Configuration.JwtKey = app.Configuration.GetValue<string>("JwtKey");
+    builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.Section));
 }
 
-void ConfigureServices(WebApplicationBuilder builder)
+void ConfigureServices()
 {
     builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-    builder.Services.AddDbContext();
+    builder.Services.AddDbContext<TodoAppDbContext>(options =>
+    {
+        options.UseSqlite("Data Source=app.db")
+            .EnableSensitiveDataLogging()
+            .LogTo(Console.WriteLine);
+    });
     builder.Services.AddRepositories();
     builder.Services.AddMapper();
     builder.Services.AddTransient<TokenService>();

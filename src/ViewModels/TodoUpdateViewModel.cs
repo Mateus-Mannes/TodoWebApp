@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TodoApp.ViewModels
+namespace TodoApp.ViewModels;
+
+public record TodoUpdateViewModel
 {
-    public class TodoUpdateViewModel
-    {
-        [Required]
-        public string Description { get; set; }
-        public DateTime? DeadLine { get; set; }
-    }
+    [Required]
+    public required string Description { get; set; }
+    public DateTime? DeadLine { get; set; }
 }
