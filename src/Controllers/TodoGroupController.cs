@@ -30,7 +30,7 @@ public class TodoGroupController : Controller
 
     [HttpPost]
     [Route("{name}")]
-    public async Task<IActionResult> CreateAsync([FromRoute]string name)
+    public async Task<IActionResult> CreateAsync([FromRoute] string name)
     {
         if (await (_todoGroupRepository.GetQueryable().AsNoTracking().AnyAsync(x => x.Name == name)))
             return BadRequest("A list with this name already exists, try another one");

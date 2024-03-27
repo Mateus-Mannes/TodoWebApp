@@ -9,7 +9,7 @@ public static class DbContextExtensions
     {
         return typeof(TodoAppDbContext).GetProperties()
             .Where(x =>
-            x.PropertyType.IsGenericType 
+            x.PropertyType.IsGenericType
             && x.PropertyType.Name.StartsWith("DbSet"))
             .ToList();
     }

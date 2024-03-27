@@ -83,7 +83,8 @@ void ConfigureOptions()
 void ConfigureServices()
 {
     builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-    builder.Services.AddDbContext<TodoAppDbContext>(options => {
+    builder.Services.AddDbContext<TodoAppDbContext>(options =>
+    {
         options.UseSqlite("Data Source=app.db")
             .EnableSensitiveDataLogging()
             .LogTo(Console.WriteLine);

@@ -38,7 +38,7 @@ namespace TodoApp.Repositories
         public async Task DeleteAsync(int id)
         {
             var existing = await table.FindAsync(id);
-            if(existing is not null) table.Remove(existing);
+            if (existing is not null) table.Remove(existing);
             await _context.SaveChangesAsync();
         }
     }

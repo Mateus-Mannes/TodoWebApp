@@ -24,7 +24,7 @@ public class TokenService
         var key = Encoding.ASCII.GetBytes(_jwtOptions.Value.JwtKey);
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
-            Subject = new ClaimsIdentity(new List<Claim>() { 
+            Subject = new ClaimsIdentity(new List<Claim>() {
                 new Claim(ClaimTypes.Name, user.Slug),
                 new Claim("UserId", user.Id.ToString()),
                 new Claim(ClaimTypes.Role, "user"),

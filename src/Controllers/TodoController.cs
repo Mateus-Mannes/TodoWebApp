@@ -38,7 +38,7 @@ public class TodoController : Controller
 
     [HttpPut]
     [Route("{id:int}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute]int id,[FromBody] TodoUpdateViewModel input)
+    public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] TodoUpdateViewModel input)
     {
         if (!ModelState.IsValid) return (BadRequest(ModelState.GetErrors()));
 

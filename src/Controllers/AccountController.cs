@@ -25,15 +25,15 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAsync(UserCreateViewModel input)
     {
-        if(!ModelState.IsValid) return BadRequest(ModelState.GetErrors());
-    
+        if (!ModelState.IsValid) return BadRequest(ModelState.GetErrors());
+
         if ((await _userRepository.GetQueryable().AsNoTracking().CountAsync()) >= 100)
             return BadRequest("The limit of users from the application was reached.");
 
         var passwordHash = PasswordHasher.Hash(input.Password);
-        var user = new User() { Name = input.Name, PasswordHash = passwordHash  };
+        var user = new User() { Name = input.Name, PasswordHash = passwordHash };
 
-        if(_userRepository.GetQueryable().AsNoTracking().Any(x => x.Slug == user.Slug))
+        if (_userRepository.GetQueryable().AsNoTracking().Any(x => x.Slug == user.Slug))
             return BadRequest("This name is already taken, choose another.");
 
         user.TodoGroups.Add(new TodoGroup() { Name = "Todos", Slug = "todos" });
@@ -51,12 +51,12 @@ public class AccountController : ControllerBase
             .AsNoTracking().FirstOrDefaultAsync(x => x.Name == input.Name);
 
         if (user == null) return NotFound("Invalid user or password.");
-        
+
         if (!PasswordHasher.Verify(user.PasswordHash, input.Password))
             return BadRequest("Invalid user or password.");
 
         var token = _tokenService.GenerateToken(user);
-        
+
         return Ok(token);
     }
 }

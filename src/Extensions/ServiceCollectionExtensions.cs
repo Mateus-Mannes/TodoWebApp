@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
             var repositoryInterface = typeof(IRepository<>).MakeGenericType(setType);
             var repositoryImplementation = typeof(Repository<>).MakeGenericType(setType);
 
-            if(context != null)
+            if (context != null)
             {
                 var constructor = repositoryImplementation.GetConstructors()[0];
                 services.AddTransient(repositoryInterface, x => constructor.Invoke(new object[] { context }));
