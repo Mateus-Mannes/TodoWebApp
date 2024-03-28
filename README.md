@@ -1,3 +1,5 @@
+This project has an .NET API at ./TodoApi and a Angular WebApp at ./TodoWebApp
+
 # TodoApi
 
 This is an API built to work as a Todo App backend, built on DOTNET 8
