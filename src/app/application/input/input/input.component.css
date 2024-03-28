@@ -1,0 +1,13 @@
+.input-form {
+  width: 100%;
+}
+
+.input-form__button {
+  width: 12%;
+}
+
+.input-form__text {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+

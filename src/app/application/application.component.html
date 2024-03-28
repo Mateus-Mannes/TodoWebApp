@@ -1,0 +1,15 @@
+<div *ngIf="loading == false && groups" style="height: 100%;">
+  <app-groups #nav [groups]="groups"></app-groups>
+  <div *ngIf="nav" style="height: calc(100% - 80px); 
+  padding-left: 0.5rem; padding-right: 0.5rem;" 
+  class="d-flex flex-column align-items-center justify-content-between">
+      <app-grid #grid [todoGroup]="nav.selectedGroup" style="width: 100%; max-width: 1200px; margin-top: 1.5em;"></app-grid>
+      <app-input (createTodo)="grid.createTodo($event)" style="width: 100%; max-width: 1200px;"></app-input>
+  </div>
+</div>
+
+<div *ngIf="loading" style="height: 100vh;" class="d-flex justify-content-center align-items-center">
+  <div class="spinner-grow" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>

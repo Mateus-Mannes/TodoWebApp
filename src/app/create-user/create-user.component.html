@@ -1,0 +1,19 @@
+<div class="login full d-flex align-items-center justify-content-center flex-column">
+  <p class="text-center font-weight-light fs-1">Create an account</p>
+  <form class="container shadow rounded">
+      <div class="mb-3">
+        <label for="username" class="form-label">User Name</label>
+        <input type="text" class="form-control" id="username" [formControl]="nameControl">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" [formControl]="passwordControl">
+      </div>
+      <div class="d-flex justify-content-center">
+      <button style="width: 180px;" (click)="create()" [disabled]="form.invalid || loading" type="submit" class="btn btn-primary">Create Account
+        <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+      </button>
+      </div>
+  </form>
+  <a class="fs-6 mt-5" href="/login">Back to login</a>
+</div>
