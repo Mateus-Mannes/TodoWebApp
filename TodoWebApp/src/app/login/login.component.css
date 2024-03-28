@@ -1,0 +1,17 @@
+.container {
+  max-width: 550px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 2%;
+}
+
+.login {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+button {
+  width: 7rem;
+}
