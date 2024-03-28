@@ -23,13 +23,13 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build ./WriteFluencyApi --configuration Release
+        run: dotnet build ./TodoApi --configuration Release
         
       - name: Test
-        run: dotnet test ./WriteFluencyApi --no-restore --verbosity normal
+        run: dotnet test ./TodoApi --no-restore --verbosity normal
 
       - name: dotnet publish
-        run: dotnet publish ./WriteFluencyApi/src/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ./TodoApi/src/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
